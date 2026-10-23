@@ -42,6 +42,8 @@ import type { Catalog, Category, Match, SiteData } from "./phenology";
 import { groupsForView, isDevMode } from "./view";
 import { basemapConfig } from "./basemap";
 import type { CampusBasemap } from "./basemap";
+import { describeLocation } from "./locations";
+import type { LocationData } from "./locations";
 
 const DEV_MODE = isDevMode(location.search);
 const devHidden = DEV_MODE ? "" : "hidden";
@@ -163,6 +165,7 @@ let phaseFilter = PHASES[category].some((p) => p.id === initial.get("phase"))
   : "all";
 let includeReferences = initial.get("refs") !== "0";
 let catalog: Catalog | undefined;
+let locationData: LocationData | undefined;
 let revision = "";
 let query = "";
 let refreshBusy = false;
@@ -358,6 +361,28 @@ function popup(feature: SpeciesFeature) {
   const title = document.createElement("h3");
   title.textContent = feature.properties.species.join(" · ");
   root.append(title);
+  const position = describeLocation(
+    feature,
+    data!.campus,
+    locationData?.landmarks ?? [],
+    locationData?.overrides,
+  );
+  const address = document.createElement("div");
+  address.className = "popup-location";
+  const addressLabel = document.createElement("strong");
+  addressLabel.textContent = "大致位置";
+  const addressText = document.createElement("p");
+  addressText.className = "location-description";
+  addressText.textContent = position.text;
+  const addressNote = document.createElement("small");
+  addressNote.textContent =
+    position.source === "manual"
+      ? "维护者补充的位置描述"
+      : position.source === "fallback"
+        ? "附近地标资料不足，可结合地图查看。"
+        : "按附近地标估算；树列和树林可能延伸至周边。";
+  address.append(addressLabel, addressText, addressNote);
+  root.append(address);
   if (DEV_MODE || feature.properties.tags.name) {
     const subtitle = document.createElement("p");
     subtitle.textContent =
@@ -929,6 +954,7 @@ function applyPublished(payload: SiteData) {
   const nextCatalog = validateCatalog(payload.catalog);
   if (revision === payload.revision) return false;
   catalog = nextCatalog;
+  locationData = payload.locations;
   revision = payload.revision;
   let next = payload.dataset;
   if (data && Date.parse(data.fetchedAt) > Date.parse(next.fetchedAt))

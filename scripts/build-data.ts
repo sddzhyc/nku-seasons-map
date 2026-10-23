@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { parse } from "yaml";
 import { validDataset } from "../src/data.js";
 import { buildIndex, validateCatalog } from "../src/phenology.js";
+import { buildLocations, validateLocationOverrides } from "../src/locations.js";
 
 export async function buildSiteData(root = process.cwd()) {
   const catalog = validateCatalog(
@@ -17,15 +18,33 @@ export async function buildSiteData(root = process.cwd()) {
     await readFile(resolve(root, "public/data/species.json"), "utf8"),
   );
   if (!validDataset(dataset)) throw new Error("物种快照无效，拒绝生成数据");
+  const overrides = validateLocationOverrides(
+    parse(await readFile(resolve(root, "data/locations.yaml"), "utf8"), {
+      maxAliasCount: 20,
+      uniqueKeys: true,
+    }),
+  );
+  const background = JSON.parse(
+    await readFile(resolve(root, "public/data/campus.json"), "utf8"),
+  );
+  const locations = buildLocations(dataset, background, overrides);
   const index = buildIndex(dataset, catalog);
   const revision = createHash("sha256")
-    .update(JSON.stringify({ dataset, catalog }))
+    .update(JSON.stringify({ dataset, catalog, locations }))
     .digest("hex")
     .slice(0, 16);
   const outputs = {
     "phenology.json": catalog,
     "species-index.json": { schemaVersion: 1, revision, species: index },
-    "site-data.json": { schemaVersion: 1, revision, dataset, catalog, index },
+    "locations.json": locations,
+    "site-data.json": {
+      schemaVersion: 1,
+      revision,
+      dataset,
+      catalog,
+      index,
+      locations,
+    },
   };
   await mkdir(resolve(root, "public/data"), { recursive: true });
   // Validate everything before writes. The browser reads one atomically replaced

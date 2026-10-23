@@ -753,6 +753,30 @@ main {
   margin: 0 0 7px;
   font-weight: 600;
 }
+.popup-location {
+  margin: 12px 0 15px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #eff3e6;
+  border: 1px solid #e1e8d5;
+  color: #4d6345;
+}
+.popup-location strong {
+  font-size: 10px;
+  font-weight: 500;
+  color: #7c8b6b;
+}
+.popup-location p {
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 5px 0;
+}
+.popup-location small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.6;
+  color: #8b977c;
+}
 .plant-popup > p {
   font-size: 11px;
   color: #8b977c;

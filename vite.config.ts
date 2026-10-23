@@ -6,13 +6,15 @@ export default defineConfig({
   base: "./",
   plugins: [
     {
-      name: "phenology-yaml-watch",
+      name: "map-yaml-watch",
       configureServer(server) {
-        const file = resolve("data/phenology.yaml");
+        const files = ["data/phenology.yaml", "data/locations.yaml"].map(
+          (file) => resolve(file),
+        );
         let pending = Promise.resolve();
-        server.watcher.add(file);
+        server.watcher.add(files);
         server.watcher.on("change", (changed) => {
-          if (resolve(changed) !== file) return;
+          if (!files.includes(resolve(changed))) return;
           pending = pending.then(async () => {
             try {
               await buildSiteData();

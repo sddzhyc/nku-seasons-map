@@ -39,6 +39,7 @@ try {
       ...paths,
       "data/site-data.json",
       "data/campus.json",
+      "data/locations.json",
       "data/species-index.json",
     ]) {
       const target = new URL(path, url);

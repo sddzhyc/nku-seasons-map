@@ -138,6 +138,11 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
     await mkdir(join(root, "data"));
     await mkdir(join(root, "public/data"), { recursive: true });
     await copyFile("data/phenology.yaml", join(root, "data/phenology.yaml"));
+    await copyFile("data/locations.yaml", join(root, "data/locations.yaml"));
+    await copyFile(
+      "public/data/campus.json",
+      join(root, "public/data/campus.json"),
+    );
     await copyFile(
       "public/data/species.json",
       join(root, "public/data/species.json"),
@@ -180,6 +185,9 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
       ],
     };
     await writeFile(join(root, "changed.json"), JSON.stringify(raw));
+    const manualLocation =
+      'schema_version: 1\noverrides:\n  node/79:\n    text: "人工确认的校园位置"\n';
+    await writeFile(join(root, "data/locations.yaml"), manualLocation);
     const args = [
       resolve("node_modules/tsx/dist/cli.mjs"),
       resolve("scripts/sync-osm.ts"),
@@ -196,6 +204,15 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
       null,
     );
     assert.equal(bundle.index.find((s) => s.name === "银杏")?.count, 1);
+    assert.equal(
+      bundle.locations?.entries["node/79"].text,
+      "人工确认的校园位置",
+    );
+    assert.equal(bundle.locations?.entries["node/79"].source, "manual");
+    assert.equal(
+      await readFile(join(root, "data/locations.yaml"), "utf8"),
+      manualLocation,
+    );
     assert.equal(
       bundle.index.find((s) => s.name === "校外物种"),
       undefined,

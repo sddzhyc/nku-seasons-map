@@ -1,4 +1,5 @@
 import type { Dataset, SpeciesFeature } from "./data";
+import type { LocationData } from "./locations";
 
 export type Category = "autumn_leaf" | "flowering";
 export type Verification = "reference" | "verified";
@@ -253,4 +254,5 @@ export interface SiteData {
   dataset: Dataset;
   catalog: Catalog;
   index: ReturnType<typeof buildIndex>;
+  locations?: LocationData;
 }

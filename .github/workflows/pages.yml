@@ -33,7 +33,7 @@ jobs:
       - run: npm run check:dist
       - name: Preserve latest valid snapshot in Git
         run: |
-          git add public/data/species.json public/data/campus.json public/data/phenology.json public/data/species-index.json public/data/site-data.json
+          git add public/data/species.json public/data/campus.json public/data/phenology.json public/data/species-index.json public/data/site-data.json public/data/locations.json
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
