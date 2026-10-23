@@ -34,6 +34,6 @@
 
 ## 当前交付状态
 
-目标仓库已创建为 [sddzhyc/nku-autumn-map](https://github.com/sddzhyc/nku-autumn-map)，站点目标为 `https://sddzhyc.github.io/nku-autumn-map/`。仓库内的工作流将在 main 推送后执行。请以 [Actions 运行结果](https://github.com/sddzhyc/nku-autumn-map/actions) 和实际站点响应确认线上状态，单有工作流文件不代表部署成功。
+项目仓库为 [sddzhyc/nku-seasons-map](https://github.com/sddzhyc/nku-seasons-map)，站点目标为 `https://sddzhyc.github.io/nku-seasons-map/`。仓库内的工作流将在 main 推送后执行。请以 [Actions 运行结果](https://github.com/sddzhyc/nku-seasons-map/actions) 和实际站点响应确认线上状态，单有工作流文件不代表部署成功。
 
 依据：[GitHub Pages 自定义工作流文档](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[官方部署 Action](https://github.com/actions/deploy-pages)、[官方上传 Action](https://github.com/actions/upload-pages-artifact)。

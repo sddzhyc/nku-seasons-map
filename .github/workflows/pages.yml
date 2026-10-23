@@ -28,6 +28,8 @@ jobs:
         run: npm run data:sync -- --with-basemap --allow-stale
       - run: npm test
       - run: npm run build
+        env:
+          VITE_TIANDITU_KEY: ${{ vars.VITE_TIANDITU_KEY }}
       - run: npm run check:dist
       - name: Preserve latest valid snapshot in Git
         run: |

@@ -8,8 +8,8 @@ const root = resolve("dist");
 const server = createServer(async (req, res) => {
   try {
     let path = new URL(req.url!, "http://localhost").pathname;
-    if (path.startsWith("/nku-autumn-map/"))
-      path = path.slice("/nku-autumn-map".length);
+    if (path.startsWith("/nku-seasons-map/"))
+      path = path.slice("/nku-seasons-map".length);
     if (path === "/") path = "/index.html";
     const target = resolve(root, "." + path);
     const inside = relative(root, target);
@@ -26,7 +26,7 @@ const server = createServer(async (req, res) => {
 await new Promise<void>((done) => server.listen(0, "127.0.0.1", done));
 try {
   const origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
-  for (const prefix of ["/", "/nku-autumn-map/"]) {
+  for (const prefix of ["/", "/nku-seasons-map/"]) {
     const url = origin + prefix;
     const response = await fetch(url);
     assert.equal(response.status, 200);

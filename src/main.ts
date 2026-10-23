@@ -39,6 +39,12 @@ import {
   validateCatalog,
 } from "./phenology";
 import type { Catalog, Category, Match, SiteData } from "./phenology";
+import { groupsForView, isDevMode } from "./view";
+import { basemapConfig } from "./basemap";
+
+const DEV_MODE = isDevMode(location.search);
+const devHidden = DEV_MODE ? "" : "hidden";
+const streetConfig = basemapConfig(import.meta.env.VITE_TIANDITU_KEY ?? "");
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
@@ -71,8 +77,8 @@ function icons() {
 
 document.querySelector("#app")!.innerHTML = `
   <header class="site-header">
-    <a class="brand" href="./" aria-label="南开一叶首页"><span class="brand-symbol"><i data-lucide="leaf"></i></span><span><b>南开一叶<span class="brand-dot">.</span></b><small>NANKAI · AUTUMN ATLAS</small></span></a>
-    <nav aria-label="主导航"><span class="nav-active">赏叶地图</span><a href="#phenology-calendar">物候日历</a><button id="about-button">数据说明 <i data-lucide="arrow-up-right"></i></button></nav>
+    <a class="brand" href="./" aria-label="南开大学津南校区赏秋地图首页"><span class="brand-symbol"><i data-lucide="leaf"></i></span><span><b>南开大学津南校区赏秋地图</b><small>NANKAI · SEASONS ATLAS</small></span></a>
+    <nav aria-label="主导航"><span class="nav-active">赏叶地图</span><a href="#phenology-calendar">物候日历</a><button id="about-button" ${devHidden}>数据说明 <i data-lucide="arrow-up-right"></i></button></nav>
     <span class="header-location"><span class="live-dot"></span> 天津 · 津南校区</span>
   </header>
   <main>
@@ -89,13 +95,13 @@ document.querySelector("#app")!.innerHTML = `
       <aside class="sidebar">
         <div class="sidebar-top"><div class="section-kicker">EXPLORE BY SPECIES</div><h2>循叶寻树 <span id="species-total">—</span></h2><p>选一个物种，看看它在哪里。</p></div>
         <div class="search-wrap"><i data-lucide="search"></i><input id="species-search" type="search" placeholder="搜索物种，如「银杏」" aria-label="搜索物种" autocomplete="off"/><button id="clear-search" aria-label="清除搜索" hidden><i data-lucide="x"></i></button></div>
-        <div class="list-heading"><span id="list-title">校园物种</span><span>OSM 要素数</span></div>
+        <div class="list-heading"><span id="list-title">校园物种</span><span>${DEV_MODE ? "OSM 要素数" : "分布处数"}</span></div>
         <div id="species-list" class="species-list" aria-label="物种选择"><div class="loading">正在读取校园植物数据…</div></div>
         <div class="sidebar-note"><span class="note-icon"><i data-lucide="leaf"></i></span><div><b>让每一片叶子有迹可循</b><p id="sidebar-guidance">物种位置来自 OSM，日期来自物候库。<br/>未登记日期的植物仍可在分布模式查看。</p></div></div>
       </aside>
       <div class="map-panel">
         <div id="map" role="region" aria-label="南开大学津南校区交互式地图"></div>
-        <div class="map-topbar"><div class="map-heading"><span class="live-dot"></span><b>津南校园</b><span class="separator">/</span><span id="map-selection">全部物种</span></div><div class="map-view"><button id="base-toggle" aria-label="切换到 OSM 标准底图"><i data-lucide="layers"></i><span>校园简图</span></button></div></div>
+        <div class="map-topbar"><div class="map-heading"><span class="live-dot"></span><b>津南校园</b><span class="separator">/</span><span id="map-selection">全部物种</span></div><div class="map-view"><button id="base-toggle" aria-label="切换到${streetConfig.name}"><i data-lucide="layers"></i><span>校园简图</span></button></div></div>
         <div id="quick-filters" class="quick-filters" aria-label="快捷物种筛选"></div>
         <div id="map-empty" class="map-empty" hidden><i data-lucide="leaf"></i><b>暂无符合条件的物候记录</b><p id="empty-description">可以换个日期，或查看全部植物分布。</p><button id="empty-distribution">查看物种分布 <i data-lucide="arrow-right"></i></button></div>
         <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div>
@@ -104,8 +110,8 @@ document.querySelector("#app")!.innerHTML = `
         <div id="tile-warning" class="tile-warning" role="status" hidden>标准底图暂未加载，可切回校园简图。</div>
       </div>
     </section>
-    <section class="data-bar" aria-label="数据状态"><div><span class="status-dot"></span><span id="data-status" role="status" aria-live="polite">正在读取数据</span><span class="data-divider"></span><span id="data-time"></span></div><button id="refresh-data"><i data-lucide="refresh-cw"></i><span>同步 OSM 数据</span></button></section>
-    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><div class="section-kicker">FOLLOW THE SEASONS</div><h2 id="calendar-title">校园物候日历<span>每一年，都值得期待</span></h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>物种 / OSM 要素</th><th>所选日期的参考状态</th><th>全年日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
+    <section class="data-bar" aria-label="数据更新时间"><div><span class="status-dot" ${devHidden}></span><span id="data-status" role="status" aria-live="polite" ${devHidden}>正在读取数据</span><span class="data-divider" ${devHidden}></span><span id="data-time">暂无数据同步日期</span></div><button id="refresh-data" ${devHidden}><i data-lucide="refresh-cw"></i><span>同步 OSM 数据</span></button></section>
+    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><div class="section-kicker">FOLLOW THE SEASONS</div><h2 id="calendar-title">校园物候日历<span>每一年，都值得期待</span></h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>${DEV_MODE ? "物种 / OSM 要素" : "物种 / 分布处数"}</th><th>所选日期的参考状态</th><th>全年日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
     <footer><span>在南开，拾起一整个秋天。</span><span>地图数据 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap 贡献者</a> <span class="footer-dot">·</span> <button id="source-button">数据说明 <i data-lucide="arrow-up-right"></i></button></span></footer>
   </main>
   <dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-top"><span class="eyebrow">ABOUT THE ATLAS</span><button id="close-dialog" aria-label="关闭说明"><i data-lucide="x"></i></button></div><h2 id="about-title">关于这张地图</h2><p>沿着真实的植物分布，读懂校园的季节。</p><div class="dialog-block"><h3>真实位置，开放数据</h3><p>点、树列及树林轮廓来自 OSM，按津南校区边界筛选。一个多多边形要素可能包含数片树林；要素数不等于树木株数。species 标签也可能标注花卉或灌木。</p></div><div class="dialog-block"><h3>日期参考与现场叶况</h3><p>分布模式按物种着色；物候模式按所选日期的阶段着色。日期由 YAML 物候库维护，历史资料和初始推定标为“待校准参考”。当前没有接入现场观测，不能把日期匹配当作实时实景。未登记区间表示资料缺失，不代表该植物没有秋叶或花期。</p></div><div class="dialog-block"><h3>每年重复的日期</h3><p>使用北京时间，日期区间包含首尾两天。开始晚于结束表示跨年。日历可查看不同年份，物候库本身不绑定年份；2月29日仅能在闰年选择。</p></div><div class="dialog-block"><h3>地图如何保持更新</h3><p>每15分钟先检查站点发布数据，再尝试 Overpass 获取最新物种。Actions 每6小时同步物种和简图并发布；失败时保留最近有效快照。OSM 编辑、Overpass 和瓦片更新各有延迟，页面始终显示数据获取时间。</p></div><a class="dialog-link" href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">参与完善 OpenStreetMap <i data-lucide="arrow-up-right"></i></a></dialog>
@@ -162,22 +168,31 @@ let refreshBusy = false;
 let lastAttempt = 0;
 let standardBase = false;
 let labelVisibilityHandler: (() => void) | undefined;
-const tileLayer = L.tileLayer(
-  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-  { maxNativeZoom: 19, maxZoom: 20 },
+const tileLayers = streetConfig.urls.map((url, index) =>
+  L.tileLayer(url, {
+    maxNativeZoom: streetConfig.maxNativeZoom,
+    maxZoom: 20,
+    subdomains: streetConfig.subdomains,
+    attribution: index === 0 ? streetConfig.attribution : undefined,
+  }),
 );
+const streetLayer = L.layerGroup(tileLayers);
 const popupOptions: L.PopupOptions = {
   maxWidth: 310,
   maxHeight: 260,
   autoPanPaddingTopLeft: L.point(20, 110),
   autoPanPaddingBottomRight: L.point(45, 105),
 };
-tileLayer.on("tileerror", () => {
-  $("tile-warning").hidden = !standardBase;
-});
-tileLayer.on("tileload", () => {
-  $("tile-warning").hidden = true;
-});
+for (const tileLayer of tileLayers) {
+  tileLayer.on("tileerror", () => {
+    $("tile-warning").textContent =
+      `${streetConfig.name}暂未加载，可切回校园简图。`;
+    $("tile-warning").hidden = !standardBase;
+  });
+  tileLayer.on("tileload", () => {
+    $("tile-warning").hidden = true;
+  });
+}
 
 function fitCampus() {
   if (boundary)
@@ -195,18 +210,18 @@ $("base-toggle").onclick = () => {
   if (standardBase) {
     map.removeLayer(base);
     map.removeLayer(labels);
-    tileLayer.addTo(map);
+    streetLayer.addTo(map);
   } else {
-    map.removeLayer(tileLayer);
+    map.removeLayer(streetLayer);
     base.addTo(map);
     labels.addTo(map);
     $("tile-warning").hidden = true;
   }
   $("base-toggle").innerHTML =
-    `<i data-lucide="layers"></i><span>${standardBase ? "OSM 标准" : "校园简图"}</span>`;
+    `<i data-lucide="layers"></i><span>${standardBase ? streetConfig.name : "校园简图"}</span>`;
   $("base-toggle").setAttribute(
     "aria-label",
-    `切换到${standardBase ? "校园简图" : " OSM 标准底图"}`,
+    `切换到${standardBase ? "校园简图" : streetConfig.name}`,
   );
   icons();
 };
@@ -323,24 +338,28 @@ function popup(feature: SpeciesFeature) {
   const title = document.createElement("h3");
   title.textContent = feature.properties.species.join(" · ");
   root.append(title);
-  const subtitle = document.createElement("p");
-  subtitle.textContent =
-    feature.properties.tags.name ||
-    (/Polygon/.test(feature.geometry.type)
-      ? "树林 / 植物区域"
-      : /Line/.test(feature.geometry.type)
-        ? "树列 / 线状要素"
-        : "单株 / 点要素");
-  root.append(subtitle);
-  const dl = document.createElement("dl");
-  for (const [key, value] of Object.entries(feature.properties.tags)) {
-    const dt = document.createElement("dt");
-    dt.textContent = key;
-    const dd = document.createElement("dd");
-    dd.textContent = value;
-    dl.append(dt, dd);
+  if (DEV_MODE || feature.properties.tags.name) {
+    const subtitle = document.createElement("p");
+    subtitle.textContent =
+      feature.properties.tags.name ||
+      (/Polygon/.test(feature.geometry.type)
+        ? "树林 / 植物区域"
+        : /Line/.test(feature.geometry.type)
+          ? "树列 / 线状要素"
+          : "单株 / 点要素");
+    root.append(subtitle);
   }
-  root.append(dl);
+  if (DEV_MODE) {
+    const dl = document.createElement("dl");
+    for (const [key, value] of Object.entries(feature.properties.tags)) {
+      const dt = document.createElement("dt");
+      dt.textContent = key;
+      const dd = document.createElement("dd");
+      dd.textContent = value;
+      dl.append(dt, dd);
+    }
+    root.append(dl);
+  }
   const note = document.createElement("p");
   note.className = "popup-note";
   const matching = feature.properties.species
@@ -374,12 +393,14 @@ function popup(feature: SpeciesFeature) {
         root.append(a);
       }
     }
-  const link = document.createElement("a");
-  link.href = `https://www.openstreetmap.org/${feature.properties.osmId}`;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.textContent = "查看 OSM 原始要素 ↗";
-  root.append(link);
+  if (DEV_MODE) {
+    const link = document.createElement("a");
+    link.href = `https://www.openstreetmap.org/${feature.properties.osmId}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "查看 OSM 原始要素 ↗";
+    root.append(link);
+  }
   return root;
 }
 
@@ -480,7 +501,9 @@ function renderHighlights(focus = false) {
     mode === "season"
       ? `${new Set(features.flatMap((f) => f.properties.species.filter((n) => catalog && phaseFor(n, date, category, catalog, includeReferences)))).size} 个匹配物种 · ${includeReferences ? "含待校准参考" : "仅已核实资料"}`
       : selected
-        ? "处 OSM 要素 · 点击地图标记了解详情"
+        ? DEV_MODE
+          ? "处 OSM 要素 · 点击地图标记了解详情"
+          : "处植物分布 · 点击地图标记了解详情"
         : `${groups.length} 个物种 · 点、线与树林轮廓`;
   $("selection-number").textContent = String(features.length);
   $("selection-card").style.setProperty(
@@ -501,9 +524,21 @@ function selectSpecies(name: string | null) {
   renderView(true);
 }
 
+function eligibleGroups() {
+  return groupsForView(groups, catalog, mode, category, includeReferences);
+}
+function allSpeciesLabel() {
+  return mode === "season"
+    ? category === "autumn_leaf"
+      ? "全部秋叶物种"
+      : "全部花期物种"
+    : "全部物种";
+}
+
 function renderList() {
-  const baseMatches = filterSpecies(groups, query);
-  const filtered = groups.filter(
+  const available = eligibleGroups();
+  const baseMatches = filterSpecies(available, query);
+  const filtered = available.filter(
     (g) =>
       baseMatches.includes(g) ||
       (catalog &&
@@ -511,12 +546,17 @@ function renderList() {
           a.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
         )),
   );
-  $("species-total").textContent = String(groups.length);
+  $("species-total").textContent = String(available.length);
   $("clear-search").hidden = !query;
   $("list-title").textContent = query
     ? `找到 ${filtered.length} 个物种`
-    : "校园物种";
-  const all = `<button class="species-row all-row ${selected === null ? "selected" : ""}" data-index="all" aria-pressed="${selected === null}"><span class="species-icon all-icon"><i data-lucide="layers"></i></span><span class="species-name">全部物种<small>看见校园的每一抹色彩</small></span><span class="species-count">${data?.features.length ?? 0}</span></button>`;
+    : mode === "season"
+      ? "已有对应物候日期的物种"
+      : "校园物种";
+  const availableCount = new Set(
+    available.flatMap((g) => g.features.map((f) => f.properties.osmId)),
+  ).size;
+  const all = `<button class="species-row all-row ${selected === null ? "selected" : ""}" data-index="all" aria-pressed="${selected === null}"><span class="species-icon all-icon"><i data-lucide="layers"></i></span><span class="species-name">${allSpeciesLabel()}<small>${mode === "season" ? "仅列已登记此类日期的物种" : "看见校园的每一抹色彩"}</small></span><span class="species-count">${availableCount}</span></button>`;
   $("species-list").innerHTML =
     all +
     (filtered.length
@@ -542,15 +582,15 @@ function renderList() {
             return `<button class="species-row ${selected === g.name ? "selected" : ""}" data-index="${groups.indexOf(g)}" aria-pressed="${selected === g.name}" style="--species-color:${mode === "season" && match ? phaseColor(category, match.phase.id) : color}"><span class="species-icon"><i data-lucide="leaf"></i></span><span class="species-name">${esc(g.name)}<small>${esc(detail)}</small></span><span class="species-count">${g.count}</span><i class="row-arrow" data-lucide="arrow-right"></i></button>`;
           })
           .join("")
-      : `<div class="empty-state"><i data-lucide="search"></i><b>还没有找到这个物种</b><p>试试「银杏」「山桃」，<br/>或清空搜索查看全部物种。</p></div>`);
+      : `<div class="empty-state"><i data-lucide="search"></i><b>${query ? "还没有找到这个物种" : "暂无符合条件的物候资料"}</b><p>${query ? "可清空搜索，或切换到全部物种分布。" : "可包含待校准参考，或查看全部物种分布。"}</p></div>`);
   icons();
 }
 function renderQuickFilters() {
-  const names = groups.filter((g) =>
+  const names = eligibleGroups().filter((g) =>
     ["银杏", "山桃", "毛白杨"].includes(g.name),
   );
   $("quick-filters").innerHTML =
-    `<button data-index="all" aria-pressed="${selected === null}" class="${selected === null ? "active" : ""}">全部物种</button>` +
+    `<button data-index="all" aria-pressed="${selected === null}" class="${selected === null ? "active" : ""}">${allSpeciesLabel()}</button>` +
     names
       .map(
         (g) =>
@@ -562,8 +602,9 @@ function renderQuickFilters() {
 function renderCalendar() {
   if (!catalog) return;
   $("calendar-disclaimer").textContent = catalog.disclaimer;
-  $("calendar-body").innerHTML = groups
-    .map((g, index) => {
+  $("calendar-body").innerHTML = eligibleGroups()
+    .map((g) => {
+      const index = groups.indexOf(g);
       const record = recordFor(g.name, catalog!);
       const matching = phaseFor(
         g.name,
@@ -587,12 +628,14 @@ function renderCalendar() {
               `<a href="${esc(s.url)}" title="${esc(s.scope)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`,
           )
           .join("") ?? "";
-      return `<tr><td><button class="calendar-species" data-index="${index}">${esc(g.name)} <i data-lucide="arrow-up-right"></i></button><small>${g.count} 处独立 OSM 要素</small></td><td>${matching ? `<span class="phase-badge" style="--phase-color:${phaseColor(category, matching.phase.id)}">${esc(matching.phase.label)}</span><small>${matching.record.verification === "verified" ? "已核实参考" : "待校准参考"}</small>` : `<span class="muted">${record?.phases.some((p) => p.category === category) ? "日期未匹配 / 资料已筛选" : "暂无此类物候日期"}</span>`}</td><td><div class="calendar-ranges">${ranges}</div></td><td><details><summary>${record?.phases.length ? (record.verification === "verified" ? "已核实资料" : "待校准参考 · 查看依据") : "待补充资料"}</summary><p>${esc(record?.note ?? "新增 OSM 物种尚未关联物候库。")}</p>${sources}</details></td></tr>`;
+      return `<tr><td><button class="calendar-species" data-index="${index}">${esc(g.name)} <i data-lucide="arrow-up-right"></i></button><small>${g.count} ${DEV_MODE ? "处独立 OSM 要素" : "处植物分布"}</small></td><td>${matching ? `<span class="phase-badge" style="--phase-color:${phaseColor(category, matching.phase.id)}">${esc(matching.phase.label)}</span><small>${matching.record.verification === "verified" ? "已核实参考" : "待校准参考"}</small>` : `<span class="muted">${record?.phases.some((p) => p.category === category) ? "日期未匹配 / 资料已筛选" : "暂无此类物候日期"}</span>`}</td><td><div class="calendar-ranges">${ranges}</div></td><td><details><summary>${record?.phases.length ? (record.verification === "verified" ? "已核实资料" : "待校准参考 · 查看依据") : "待补充资料"}</summary><p>${esc(record?.note ?? "新增 OSM 物种尚未关联物候库。")}</p>${sources}</details></td></tr>`;
     })
     .join("");
 }
 
 function renderView(focus = false) {
+  if (selected && !eligibleGroups().some((g) => g.name === selected))
+    selected = null;
   $("view-season").setAttribute("aria-pressed", String(mode === "season"));
   $("view-distribution").setAttribute(
     "aria-pressed",
@@ -637,6 +680,7 @@ function renderView(focus = false) {
   if (selected) params.set("species", selected);
   if (phaseFilter !== "all") params.set("phase", phaseFilter);
   if (!includeReferences) params.set("refs", "0");
+  if (DEV_MODE) params.set("dev", "1");
   history.replaceState(
     null,
     "",
@@ -757,17 +801,20 @@ function useData(next: Dataset, status: string) {
   }).addTo(map);
   $("data-status").textContent = status;
   $("data-time").textContent =
-    "获取于 " +
+    (DEV_MODE ? "数据同步时间：" : "最近数据同步：") +
     new Intl.DateTimeFormat("zh-CN", {
       timeZone: "Asia/Shanghai",
+      year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
+      ...(DEV_MODE
+        ? { hour: "2-digit" as const, minute: "2-digit" as const }
+        : {}),
       hour12: false,
     }).format(new Date(data.fetchedAt));
-  $("data-time").title =
-    `获取时间（北京时间）：${data.fetchedAt}${data.osmTimestamp ? "\nOSM 数据时间：" + data.osmTimestamp : ""}`;
+  $("data-time").title = DEV_MODE
+    ? `获取时间（北京时间）：${data.fetchedAt}${data.osmTimestamp ? "\nOSM 数据时间：" + data.osmTimestamp : ""}`
+    : "北京时间";
   renderView();
 }
 
@@ -923,7 +970,8 @@ async function start() {
       "物候数据暂不可用，请检查站点数据文件或稍后刷新。";
   }
   await basePromise.catch(() => {
-    $("tile-warning").textContent = "校园简图未能读取，可切换到 OSM 标准底图。";
+    $("tile-warning").textContent =
+      `校园简图未能读取，可切换到${streetConfig.name}。`;
     $("tile-warning").hidden = false;
   });
 }
