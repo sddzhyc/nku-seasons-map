@@ -4,7 +4,9 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 
 export const CAMPUS_WAY = 476603067;
 export const CENTER: [number, number] = [38.988622, 117.333825];
-export const BBOX = [117.315, 38.975, 117.355, 39.005] as const;
+// Basemap context extends roughly one kilometre beyond each side of campus.
+// Plant selection is still constrained by the actual OSM campus polygon.
+export const BBOX = [117.314, 38.971, 117.366, 39.006] as const;
 export const OVERPASS_QUERY = `[out:json][timeout:25];way(${CAMPUS_WAY});map_to_area->.campus;(nwr["species"](area.campus);way(${CAMPUS_WAY}););out body;>;out skel qt;`;
 export const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
@@ -54,14 +56,19 @@ export function convertOsm(
   source: string,
   fetchedAt = new Date().toISOString(),
 ): Dataset {
-  if ((raw as { remark?: string })?.remark) throw new Error('OSM 查询报告错误或返回不完整结果，保留上次数据。');
+  if ((raw as { remark?: string })?.remark)
+    throw new Error("OSM 查询报告错误或返回不完整结果，保留上次数据。");
   const collection = osmtogeojson(raw as Parameters<typeof osmtogeojson>[0], {
     flatProperties: false,
   }) as FeatureCollection;
   const campus = collection.features.find(
     (f) => String(f.id) === `way/${CAMPUS_WAY}`,
   );
-  if (!campus || campus.properties?.tainted || !["Polygon", "MultiPolygon"].includes(campus.geometry?.type))
+  if (
+    !campus ||
+    campus.properties?.tainted ||
+    !["Polygon", "MultiPolygon"].includes(campus.geometry?.type)
+  )
     throw new Error("校园边界缺失，保留上一次有效数据。");
   const tagged = collection.features.filter((f) => plainTags(f).species);
   if (tagged.some((f) => f.properties?.tainted))

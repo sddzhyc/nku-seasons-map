@@ -16,7 +16,7 @@ import {
 } from "lucide";
 import "leaflet/dist/leaflet.css";
 import "./style.css";
-import type { Feature, FeatureCollection } from "geojson";
+import type { Feature } from "geojson";
 import {
   CENTER,
   convertOsm,
@@ -41,6 +41,7 @@ import {
 import type { Catalog, Category, Match, SiteData } from "./phenology";
 import { groupsForView, isDevMode } from "./view";
 import { basemapConfig } from "./basemap";
+import type { CampusBasemap } from "./basemap";
 
 const DEV_MODE = isDevMode(location.search);
 const devHidden = DEV_MODE ? "" : "hidden";
@@ -106,7 +107,7 @@ document.querySelector("#app")!.innerHTML = `
         <div id="map-empty" class="map-empty" hidden><i data-lucide="leaf"></i><b>暂无符合条件的物候记录</b><p id="empty-description">可以换个日期，或查看全部植物分布。</p><button id="empty-distribution">查看物种分布 <i data-lucide="arrow-right"></i></button></div>
         <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div>
         <div id="selection-card" class="selection-card"><span class="card-icon"><i data-lucide="trees"></i></span><div><b id="selection-title">校园植物图鉴</b><p id="selection-description">正在加载真实 OSM 要素</p></div><span id="selection-number">—</span></div>
-        <div class="map-caption"><span class="outline-swatch"></span>校园边界 <span class="caption-divider">·</span> 点击色块或标记查看植物</div>
+        <div class="map-caption"><span class="outline-swatch"></span>校园边界 <span id="context-caption"><span class="caption-divider">·</span> 周边随距离淡化</span> <span class="caption-divider">·</span> 点击标记查看植物</div>
         <div id="tile-warning" class="tile-warning" role="status" hidden>标准底图暂未加载，可切回校园简图。</div>
       </div>
     </section>
@@ -207,6 +208,7 @@ $("zoom-in").onclick = () => map.zoomIn();
 $("zoom-out").onclick = () => map.zoomOut();
 $("base-toggle").onclick = () => {
   standardBase = !standardBase;
+  $("context-caption").hidden = standardBase;
   if (standardBase) {
     map.removeLayer(base);
     map.removeLayer(labels);
@@ -226,7 +228,7 @@ $("base-toggle").onclick = () => {
   icons();
 };
 
-function addCampusBase(collection: FeatureCollection) {
+function addCampusBase(collection: CampusBasemap) {
   base.clearLayers();
   labels.clearLayers();
   const areas = collection.features.filter((f) =>
@@ -298,6 +300,21 @@ function addCampusBase(collection: FeatureCollection) {
       lineCap: "round",
     }),
   }).addTo(base);
+  // Geographic bands follow the real boundary. Draw above all background
+  // geometry so a road crossing campus also fades along its outside portion.
+  if (collection.context?.fadeBands) {
+    L.geoJSON(collection.context.fadeBands, {
+      pane: "base",
+      interactive: false,
+      style: (f) => ({
+        className: "context-fade-band",
+        stroke: false,
+        fillColor: "#edf1e1",
+        fillOpacity: Number(f?.properties?.fadeOpacity ?? 0),
+        fillRule: "evenodd",
+      }),
+    }).addTo(base);
+  }
   const named = collection.features.filter(
     (f) =>
       f.properties?.name &&
@@ -307,15 +324,18 @@ function addCampusBase(collection: FeatureCollection) {
   );
   for (const f of named) {
     const point = L.geoJSON(f).getBounds().getCenter();
-    const important = /湖|中心图书馆|学一食堂|学二食堂|体育馆/.test(
-      String(f.properties!.name),
-    );
+    const opacity = Number(f.properties?.contextOpacity ?? 1);
+    const outside = opacity < 1;
+    const important =
+      !outside &&
+      /湖|中心图书馆|学一食堂|学二食堂|体育馆/.test(String(f.properties!.name));
     L.marker(point, {
       interactive: false,
       keyboard: false,
       pane: "labels",
+      opacity,
       icon: L.divIcon({
-        className: `campus-label${important ? " key-label" : ""}`,
+        className: `campus-label${important ? " key-label" : ""}${outside ? " context-label" : ""}`,
         html: esc(String(f.properties!.name)),
         iconSize: [110, 20],
         iconAnchor: [55, 10],

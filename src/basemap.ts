@@ -31,3 +31,17 @@ export function basemapConfig(tiandituKey = ""): BasemapConfig {
     subdomains: "",
   };
 }
+import type { FeatureCollection, Polygon, MultiPolygon } from "geojson";
+
+export interface CampusBasemap extends FeatureCollection {
+  context?: {
+    schemaVersion: 1;
+    source: string;
+    fetchedAt: string;
+    bounds: number[];
+    fadeBands: FeatureCollection<
+      Polygon | MultiPolygon,
+      { fadeOpacity: number }
+    >;
+  };
+}

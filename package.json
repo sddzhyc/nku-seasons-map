@@ -25,6 +25,9 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
+    "@turf/bbox-clip": "^7.4.0",
+    "@turf/buffer": "^7.4.0",
+    "@turf/difference": "^7.4.0",
     "@types/geojson": "^7946.0.16",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^24.0.0",

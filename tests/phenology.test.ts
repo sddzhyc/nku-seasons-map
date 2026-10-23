@@ -144,10 +144,10 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
     );
     const raw = {
       elements: [
-        { type: "node", id: 1, lon: 0, lat: 0 },
-        { type: "node", id: 2, lon: 2, lat: 0 },
-        { type: "node", id: 3, lon: 2, lat: 2 },
-        { type: "node", id: 4, lon: 0, lat: 2 },
+        { type: "node", id: 1, lon: 117.33, lat: 38.985 },
+        { type: "node", id: 2, lon: 117.332, lat: 38.985 },
+        { type: "node", id: 3, lon: 117.332, lat: 38.987 },
+        { type: "node", id: 4, lon: 117.33, lat: 38.987 },
         {
           type: "way",
           id: CAMPUS_WAY,
@@ -164,10 +164,19 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
         {
           type: "node",
           id: 79,
-          lon: 1,
-          lat: 1,
+          lon: 117.331,
+          lat: 38.986,
           tags: { natural: "tree", species: "新物种;银杏" },
         },
+        {
+          type: "node",
+          id: 80,
+          lon: 117.34,
+          lat: 38.986,
+          tags: { natural: "tree", species: "校外物种" },
+        },
+        { type: "node", id: 81, lon: 117.341, lat: 38.986 },
+        { type: "way", id: 82, nodes: [80, 81], tags: { highway: "service" } },
       ],
     };
     await writeFile(join(root, "changed.json"), JSON.stringify(raw));
@@ -187,6 +196,17 @@ test("sync imports changed OSM payload, regenerates index, and preserves last-go
       null,
     );
     assert.equal(bundle.index.find((s) => s.name === "银杏")?.count, 1);
+    assert.equal(
+      bundle.index.find((s) => s.name === "校外物种"),
+      undefined,
+    );
+    const background = JSON.parse(
+      await readFile(join(root, "public/data/campus.json"), "utf8"),
+    );
+    assert.ok(
+      background.features.some((f: { id: string }) => f.id === "way/82"),
+    );
+    assert.ok(background.context.fadeBands.features.length > 0);
     const before = await readFile(
       join(root, "public/data/species.json"),
       "utf8",
