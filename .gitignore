@@ -1,0 +1,6 @@
+node_modules/
+dist/
+osm-research.json
+*.tmp
+.DS_Store
+*.log

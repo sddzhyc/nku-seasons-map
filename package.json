@@ -1,0 +1,36 @@
+{
+  "name": "nku-autumn-map",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "overrides": {
+    "@xmldom/xmldom": "^0.9.12"
+  },
+  "scripts": {
+    "dev": "npm run data:build && vite --host 127.0.0.1",
+    "build": "npm run data:build && tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "data:sync": "tsx scripts/sync-osm.ts",
+    "data:build": "tsx scripts/build-data.ts",
+    "check:dist": "tsx scripts/check-dist.ts",
+    "data:bootstrap": "tsx scripts/sync-osm.ts --bootstrap",
+    "data:import": "tsx scripts/sync-osm.ts --input osm-research.json",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@turf/boolean-intersects": "^7.3.0",
+    "leaflet": "^1.9.4",
+    "lucide": "^0.468.0",
+    "osmtogeojson": "^3.0.0-beta.5",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^24.0.0",
+    "@types/osmtogeojson": "^2.2.34",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0"
+  }
+}

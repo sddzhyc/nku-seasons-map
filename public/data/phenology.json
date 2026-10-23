@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Shanghai",
+  "updated_at": "2026-10-23",
+  "disclaimer": "物候参考由历史资料与维护者初始推定整理，尚未完成津南校区逐日观测校准。颜色表示所选日期的参考阶段，不代表现场实时叶况；天气和个体差异会使时间提前或推迟。",
+  "sources": [
+    {
+      "id": "tianjin-autumn",
+      "title": "天津港保税区门户网站：满园“黄金叶”藏在津北森林公园（2025-11-10）",
+      "url": "https://www.tjftz.gov.cn/contents/5992/376689.html",
+      "scope": "天津地区银杏赏秋时段参考；不支持津南校区具体日界。"
+    },
+    {
+      "id": "nankai-leaves",
+      "title": "南开大学社会学院：秋日创意团日活动（2025-11-21）",
+      "url": "https://shxy.nankai.edu.cn/info/1870/2495.htm",
+      "scope": "记录11月14日收集银杏等落叶，仅为历史校园佐证，不能视作固定落叶起始日。"
+    },
+    {
+      "id": "nankai-peach",
+      "title": "南开大学：南开园的花，开了（2022-03-16）",
+      "url": "https://news.nankai.edu.cn/ywsd/system/2022/03/16/030050611.shtml",
+      "scope": "校内三月山桃开花历史记录；报道位置并非本地图具体要素。"
+    },
+    {
+      "id": "tianjin-peach",
+      "title": "今晚报园林负责人访谈：山桃玉兰海棠红（2026-03-21）",
+      "url": "https://news.enorth.com.cn/system/2026/03/21/059242643.shtml",
+      "scope": "天津山桃3月开放的一般时段；非津南校区连续观测。"
+    }
+  ],
+  "species": [
+    {
+      "id": "ginkgo",
+      "display_name": "银杏",
+      "osm_species_values": [
+        "银杏",
+        "Ginkgo biloba"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "tianjin-autumn",
+        "nankai-leaves"
+      ],
+      "note": "初染、浓色和落叶的日界为初始推定；资料仅支持天津深秋赏杏及校园11月落叶现象。各阶段实际可重叠，本参考模型用互不重叠的主阶段表示。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-20",
+          "end": "10-31",
+          "label": "初染",
+          "description": "10月下旬，绿黄相间"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "11-01",
+          "end": "11-12",
+          "label": "叶色正浓",
+          "description": "11月上旬至中旬，金黄渐浓"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-13",
+          "end": "11-30",
+          "label": "开始落叶",
+          "description": "11月中下旬，枝叶与落叶同赏"
+        }
+      ]
+    },
+    {
+      "id": "peach",
+      "display_name": "山桃",
+      "osm_species_values": [
+        "山桃",
+        "Prunus davidiana",
+        "Amygdalus davidiana"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "nankai-peach",
+        "tianjin-peach"
+      ],
+      "note": "三月花期有历史资料支持；初绽、盛开及落花的具体日界为维护者待校准推定，不适用于当年精确预报。",
+      "phases": [
+        {
+          "id": "budding",
+          "category": "flowering",
+          "start": "03-05",
+          "end": "03-12",
+          "label": "初绽",
+          "description": "3月上旬，花苞初放"
+        },
+        {
+          "id": "bloom",
+          "category": "flowering",
+          "start": "03-13",
+          "end": "03-24",
+          "label": "盛开",
+          "description": "3月中下旬，粉白成片"
+        },
+        {
+          "id": "fading",
+          "category": "flowering",
+          "start": "03-25",
+          "end": "03-31",
+          "label": "落花",
+          "description": "3月下旬，花落新叶生"
+        }
+      ]
+    },
+    {
+      "id": "poplar",
+      "display_name": "毛白杨",
+      "osm_species_values": [
+        "毛白杨",
+        "Populus tomentosa"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚缺津南校区可校准的物候资料，暂不填写日期。",
+      "phases": []
+    },
+    {
+      "id": "plane",
+      "display_name": "法桐",
+      "osm_species_values": [
+        "法桐",
+        "悬铃木",
+        "Platanus acerifolia",
+        "Platanus hispanica"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "俗名可能对应不同悬铃木，确认物种与本地观测后补充。",
+      "phases": []
+    },
+    {
+      "id": "willow",
+      "display_name": "柳树",
+      "osm_species_values": [
+        "柳树"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "OSM 标签未细分树种，等待校准。",
+      "phases": []
+    },
+    {
+      "id": "pear",
+      "display_name": "白梨",
+      "osm_species_values": [
+        "白梨",
+        "Pyrus bretschneideri"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚无本地校准日期。",
+      "phases": []
+    },
+    {
+      "id": "crabapple",
+      "display_name": "西府海棠",
+      "osm_species_values": [
+        "西府海棠",
+        "Malus micromalus"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚无本地校准日期。",
+      "phases": []
+    },
+    {
+      "id": "plum",
+      "display_name": "美人梅",
+      "osm_species_values": [
+        "美人梅"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚无本地校准日期。",
+      "phases": []
+    },
+    {
+      "id": "cherry",
+      "display_name": "樱花",
+      "osm_species_values": [
+        "樱花"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "需确认品种后再填写花期。",
+      "phases": []
+    },
+    {
+      "id": "rose",
+      "display_name": "月季",
+      "osm_species_values": [
+        "月季"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "花期受品种及养护影响，尚待补充。",
+      "phases": []
+    },
+    {
+      "id": "peony",
+      "display_name": "芍药",
+      "osm_species_values": [
+        "芍药",
+        "Paeonia lactiflora"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚无本地校准日期。",
+      "phases": []
+    },
+    {
+      "id": "locust",
+      "display_name": "香花槐",
+      "osm_species_values": [
+        "香花槐"
+      ],
+      "verification": "reference",
+      "source_ids": [],
+      "note": "尚无本地校准日期。",
+      "phases": []
+    }
+  ]
+}

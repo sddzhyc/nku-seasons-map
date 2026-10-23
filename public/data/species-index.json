@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "revision": "07ca39dcc987f2db",
+  "species": [
+    {
+      "name": "银杏",
+      "count": 10,
+      "osmIds": [
+        "way/1448582299",
+        "way/1448582300",
+        "way/1448582301",
+        "way/1448582302",
+        "way/1448582303",
+        "way/1448582304",
+        "way/1448582305",
+        "way/1448582306",
+        "way/1449405219",
+        "way/1449405223"
+      ],
+      "phenologyId": "ginkgo"
+    },
+    {
+      "name": "毛白杨",
+      "count": 4,
+      "osmIds": [
+        "relation/20587587",
+        "way/1445212491",
+        "way/1498820821",
+        "way/1498820822"
+      ],
+      "phenologyId": "poplar"
+    },
+    {
+      "name": "香花槐",
+      "count": 4,
+      "osmIds": [
+        "way/1507434823",
+        "way/1507434824",
+        "way/1507434825",
+        "way/1507434826"
+      ],
+      "phenologyId": "locust"
+    },
+    {
+      "name": "山桃",
+      "count": 3,
+      "osmIds": [
+        "node/13666429630",
+        "relation/20356937",
+        "way/1490938708"
+      ],
+      "phenologyId": "peach"
+    },
+    {
+      "name": "法桐",
+      "count": 2,
+      "osmIds": [
+        "way/1503563537",
+        "way/1503563538"
+      ],
+      "phenologyId": "plane"
+    },
+    {
+      "name": "西府海棠",
+      "count": 2,
+      "osmIds": [
+        "way/1489508109",
+        "way/1489508110"
+      ],
+      "phenologyId": "crabapple"
+    },
+    {
+      "name": "白梨",
+      "count": 1,
+      "osmIds": [
+        "way/1412230607"
+      ],
+      "phenologyId": "pear"
+    },
+    {
+      "name": "柳树",
+      "count": 1,
+      "osmIds": [
+        "way/1433084258"
+      ],
+      "phenologyId": "willow"
+    },
+    {
+      "name": "美人梅",
+      "count": 1,
+      "osmIds": [
+        "way/1444302755"
+      ],
+      "phenologyId": "plum"
+    },
+    {
+      "name": "芍药",
+      "count": 1,
+      "osmIds": [
+        "way/1507434822"
+      ],
+      "phenologyId": "peony"
+    },
+    {
+      "name": "樱花",
+      "count": 1,
+      "osmIds": [
+        "way/1444302759"
+      ],
+      "phenologyId": "cherry"
+    },
+    {
+      "name": "月季",
+      "count": 1,
+      "osmIds": [
+        "way/1444302745"
+      ],
+      "phenologyId": "rose"
+    }
+  ]
+}
