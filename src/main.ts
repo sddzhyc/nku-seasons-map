@@ -40,7 +40,7 @@ import {
   validateCatalog,
 } from "./phenology";
 import type { Catalog, Category, Match, SiteData } from "./phenology";
-import { groupsForView, isDevMode } from "./view";
+import { groupsForView, isDevMode, phenologyStats } from "./view";
 import { basemapConfig } from "./basemap";
 import type { CampusBasemap } from "./basemap";
 import { describeLocation } from "./locations";
@@ -81,27 +81,23 @@ function icons() {
 
 document.querySelector("#app")!.innerHTML = `
   <header class="site-header">
-    <a class="brand" href="./" aria-label="南开大学津南校区赏秋地图首页"><span class="brand-symbol"><i data-lucide="leaf"></i></span><span><b>南开大学津南校区赏秋地图</b><small>NANKAI · SEASONS ATLAS</small></span></a>
+    <a class="brand" href="./" aria-label="南开大学津南校区赏秋地图首页"><span class="brand-symbol"><i data-lucide="leaf"></i></span><span><b>南开大学津南校区赏秋地图</b></span></a>
     <nav aria-label="主导航"><span class="nav-active">赏叶地图</span><a href="#phenology-calendar">物候日历</a><button id="about-button" ${devHidden}>数据说明 <i data-lucide="arrow-up-right"></i></button></nav>
-    <span class="header-location"><span class="live-dot"></span> 天津 · 津南校区</span>
   </header>
   <main>
-    <section class="intro" aria-labelledby="page-title">
-      <div><div class="eyebrow"><span></span> 一叶知秋，一步一景</div><h1 id="page-title">把秋天，走成一张地图<span>。</span></h1><p>从一片银杏开始，发现津南校园的季节色彩。</p></div>
-      <div class="intro-note"><span class="edition">CAMPUS FIELD NOTES / 01</span><span>南开大学 · 津南校区</span><small>基于 OpenStreetMap 的校园植物探索</small></div>
-    </section>
     <section class="season-panel" aria-label="物候筛选">
       <div class="season-toolbar"><div class="view-tabs" aria-label="展示方式"><button id="view-season" aria-pressed="true">按日期看物候</button><button id="view-distribution" aria-pressed="false">全部物种分布</button></div><div class="date-controls"><label for="view-date">观赏日期</label><input type="date" id="view-date" aria-label="观赏日期"/><button id="today-button">今天</button><span class="time-zone">北京时间</span></div></div>
-      <div id="season-options" class="season-options"><div class="category-tabs" aria-label="物候类型"><button data-category="autumn_leaf" aria-pressed="true">赏秋叶</button><button data-category="flowering" aria-pressed="false">看花开</button></div><div id="phase-filters" class="phase-filters" aria-label="物候阶段"></div><label class="reference-toggle"><input type="checkbox" id="include-reference" checked/>含待校准参考</label></div>
+      <div id="season-options" class="season-options"><div class="category-tabs" aria-label="物候类型"><button data-category="autumn_leaf" aria-pressed="true">赏秋叶</button><button data-category="flowering" aria-pressed="false">看花开</button></div><label class="reference-toggle"><input type="checkbox" id="include-reference" checked/>含待校准参考</label></div>
+      <section class="status-statistics" aria-labelledby="statistics-title"><div class="statistics-heading"><h2 id="statistics-title">秋叶状态统计</h2><span id="statistics-scope"></span></div><div id="phase-filters" class="phase-filters" aria-label="物候阶段统计与筛选"></div></section>
       <div class="season-note"><i data-lucide="info"></i><span id="season-summary" role="status" aria-live="polite">正在读取物候资料…</span><button id="calendar-jump">查看日期依据 <i data-lucide="arrow-right"></i></button></div>
     </section>
     <section class="explorer" aria-label="校园树种地图浏览器">
       <aside class="sidebar">
-        <div class="sidebar-top"><div class="section-kicker">EXPLORE BY SPECIES</div><h2>循叶寻树 <span id="species-total">—</span></h2><p>选一个物种，看看它在哪里。</p></div>
+        <div class="sidebar-top"><h2>物种列表 <span id="species-total">—</span></h2></div>
         <div class="search-wrap"><i data-lucide="search"></i><input id="species-search" type="search" placeholder="搜索物种，如「银杏」" aria-label="搜索物种" autocomplete="off"/><button id="clear-search" aria-label="清除搜索" hidden><i data-lucide="x"></i></button></div>
         <div class="list-heading"><span id="list-title">校园物种</span><span>${DEV_MODE ? "OSM 要素数" : "分布处数"}</span></div>
         <div id="species-list" class="species-list" aria-label="物种选择"><div class="loading">正在读取校园植物数据…</div></div>
-        <div class="sidebar-note"><span class="note-icon"><i data-lucide="leaf"></i></span><div><b>让每一片叶子有迹可循</b><p id="sidebar-guidance">物种位置来自 OSM，日期来自物候库。<br/>未登记日期的植物仍可在分布模式查看。</p></div></div>
+        <div class="sidebar-note"><span class="note-icon"><i data-lucide="leaf"></i></span><div><p id="sidebar-guidance">物种位置来自 OSM，日期来自物候库。<br/>未登记日期的植物仍可在分布模式查看。</p></div></div>
       </aside>
       <div class="map-panel">
         <div id="map" role="region" aria-label="南开大学津南校区交互式地图"></div>
@@ -115,8 +111,8 @@ document.querySelector("#app")!.innerHTML = `
       </div>
     </section>
     <section class="data-bar" aria-label="数据更新时间"><div><span class="status-dot" ${devHidden}></span><span id="data-status" role="status" aria-live="polite" ${devHidden}>正在读取数据</span><span class="data-divider" ${devHidden}></span><span id="data-time">暂无数据同步日期</span></div><button id="refresh-data" ${devHidden}><i data-lucide="refresh-cw"></i><span>同步 OSM 数据</span></button></section>
-    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><div class="section-kicker">FOLLOW THE SEASONS</div><h2 id="calendar-title">校园物候日历<span>每一年，都值得期待</span></h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>${DEV_MODE ? "物种 / OSM 要素" : "物种 / 分布处数"}</th><th>所选日期的参考状态</th><th>全年日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
-    <footer><span>在南开，拾起一整个秋天。</span><span>地图数据 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap 贡献者</a> <span class="footer-dot">·</span> <button id="source-button">数据说明 <i data-lucide="arrow-up-right"></i></button></span></footer>
+    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><h2 id="calendar-title">校园物候日历</h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>${DEV_MODE ? "物种 / OSM 要素" : "物种 / 分布处数"}</th><th>所选日期的参考状态</th><th>全年日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
+    <footer><span>地图数据 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap 贡献者</a> <span class="footer-dot">·</span> <button id="source-button">数据说明 <i data-lucide="arrow-up-right"></i></button></span></footer>
   </main>
   <dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-top"><span class="eyebrow">ABOUT THE ATLAS</span><button id="close-dialog" aria-label="关闭说明"><i data-lucide="x"></i></button></div><h2 id="about-title">关于这张地图</h2><p>沿着真实的植物分布，读懂校园的季节。</p><div class="dialog-block"><h3>真实位置，开放数据</h3><p>点、树列及树林轮廓来自 OSM，按津南校区边界筛选。一个多多边形要素可能包含数片树林；要素数不等于树木株数。species 标签也可能标注花卉或灌木。</p></div><div class="dialog-block"><h3>日期参考与现场叶况</h3><p>分布模式按物种着色；物候模式按所选日期的阶段着色。日期由 YAML 物候库维护，历史资料和初始推定标为“待校准参考”。当前没有接入现场观测，不能把日期匹配当作实时实景。未登记区间表示资料缺失，不代表该植物没有秋叶或花期。</p></div><div class="dialog-block"><h3>每年重复的日期</h3><p>使用北京时间，日期区间包含首尾两天。开始晚于结束表示跨年。日历可查看不同年份，物候库本身不绑定年份；2月29日仅能在闰年选择。</p></div><div class="dialog-block"><h3>地图如何保持更新</h3><p>每15分钟先检查站点发布数据，再尝试 Overpass 获取最新物种。Actions 每6小时同步物种和简图并发布；失败时保留最近有效快照。OSM 编辑、Overpass 和瓦片更新各有延迟，页面始终显示数据获取时间。</p></div><a class="dialog-link" href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">参与完善 OpenStreetMap <i data-lucide="arrow-up-right"></i></a></dialog>
 `;
@@ -457,13 +453,13 @@ function activeMatch(feature: SpeciesFeature): Match | undefined {
         (m): m is Match => !!m,
       )
     : matchesFor(feature, date, category, catalog, includeReferences);
-  return matches
-    .filter((m) => phaseFilter === "all" || m.phase.id === phaseFilter)
+  const match = matches
     .sort(
       (a, b) =>
         PHASES[category].findIndex((p) => p.id === b.phase.id) -
         PHASES[category].findIndex((p) => p.id === a.phase.id),
     )[0];
+  return match && (phaseFilter === "all" || match.phase.id === phaseFilter) ? match : undefined;
 }
 
 function renderHighlights(focus = false) {
@@ -602,7 +598,7 @@ function renderList() {
   const availableCount = new Set(
     available.flatMap((g) => g.features.map((f) => f.properties.osmId)),
   ).size;
-  const all = `<button class="species-row all-row ${selected === null ? "selected" : ""}" data-index="all" aria-pressed="${selected === null}"><span class="species-icon all-icon"><i data-lucide="layers"></i></span><span class="species-name">${allSpeciesLabel()}<small>${mode === "season" ? "仅列已登记此类日期的物种" : "看见校园的每一抹色彩"}</small></span><span class="species-count">${availableCount}</span></button>`;
+  const all = `<button class="species-row all-row ${selected === null ? "selected" : ""}" data-index="all" aria-pressed="${selected === null}"><span class="species-icon all-icon"><i data-lucide="layers"></i></span><span class="species-name">${allSpeciesLabel()}<small>${mode === "season" ? "仅列已登记此类日期的物种" : "全部已登记植物"}</small></span><span class="species-count">${availableCount}</span></button>`;
   $("species-list").innerHTML =
     all +
     (filtered.length
@@ -696,27 +692,20 @@ function renderView(focus = false) {
     .forEach((b) =>
       b.setAttribute("aria-pressed", String(b.dataset.category === category)),
     );
-  $("phase-filters").innerHTML =
-    `<button data-phase="all" aria-pressed="${phaseFilter === "all"}">全部阶段</button>` +
-    PHASES[category]
-      .map(
-        (p) =>
-          `<button data-phase="${p.id}" aria-pressed="${phaseFilter === p.id}" style="--phase-color:${p.color}"><span></span>${p.label}</button>`,
-      )
-      .join("");
-  const configured = groups.filter(
-    (g) =>
-      catalog &&
-      recordFor(g.name, catalog)?.phases.some((p) => p.category === category),
-  ).length;
-  const active = groups.filter(
-    (g) =>
-      catalog && phaseFor(g.name, date, category, catalog, includeReferences),
-  ).length;
-  $("season-summary").textContent =
-    mode === "distribution"
-      ? "分布模式：颜色区分物种；点击物候日历可查看日期与资料来源。"
-      : `${date} · ${category === "autumn_leaf" ? "秋叶" : "花期"}参考，${active} 个物种匹配日期；${groups.length - configured} 个物种暂无此类日期。${includeReferences ? "含待校准推定，不代表现场实况。" : "仅显示已核实资料，未核实记录已隐藏。"}`;
+  const stats = phenologyStats(data?.features ?? [], catalog, date, category, selected, includeReferences);
+  $("statistics-title").textContent = category === "autumn_leaf" ? "秋叶状态统计" : "花期状态统计";
+  $("statistics-scope").textContent = date + " · " + (selected ?? "全部物种") + " · " + stats.total + " 处植物分布";
+  const card = (label: string, count: number, phase?: string, color = "#3d573d") => {
+    const content = '<span class="stat-label">' + label + '</span><span class="stat-value">' + count + '<small>处</small></span>';
+    return phase ? '<button type="button" class="stat-card" data-phase="' + phase + '" aria-pressed="' + (mode === "season" && phaseFilter === phase) + '" style="--phase-color:' + color + '">' + content + '</button>' : '<div class="stat-card stat-neutral">' + content + '</div>';
+  };
+  $("phase-filters").innerHTML = card("匹配日期", stats.matched, "all") +
+    PHASES[category].map((p) => card(p.label, stats.phases[p.id], p.id, p.color)).join("") +
+    card("未匹配日期", stats.outside) + card("暂无物候日期", stats.unknown) +
+    (stats.excluded ? card("已排除参考", stats.excluded) : "");
+  $("season-summary").textContent = mode === "distribution"
+    ? "地图按物种着色；点击状态卡片可切换到对应物候阶段。"
+    : (includeReferences ? "含待校准参考，日期匹配不代表现场实况。" : "仅使用已核实资料。") + "统计按分布处数计算，非树木株数。";
   renderList();
   renderQuickFilters();
   renderHighlights(focus);
@@ -772,6 +761,7 @@ $("phase-filters").onclick = (event) => {
     "[data-phase]",
   );
   if (button) {
+    mode = "season";
     phaseFilter = button.dataset.phase!;
     renderView();
   }

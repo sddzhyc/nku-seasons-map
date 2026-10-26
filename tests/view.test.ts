@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { parse } from "yaml";
 import { groupSpecies, type Dataset } from "../src/data.js";
 import { validateCatalog } from "../src/phenology.js";
-import { groupsForView, isDevMode } from "../src/view.js";
+import { groupsForView, isDevMode, phenologyStats } from "../src/view.js";
 import { basemapConfig } from "../src/basemap.js";
 
 const catalog = validateCatalog(
@@ -14,6 +14,40 @@ const dataset: Dataset = JSON.parse(
   await readFile("tests/fixtures/stage1-species.json", "utf8"),
 );
 const groups = groupSpecies(dataset.features);
+
+test("stage statistics distinguish active, out-of-season, missing, and excluded dates", () => {
+  const autumn = phenologyStats(dataset.features, catalog, "2026-10-26", "autumn_leaf");
+  const ginkgo = groups.find((g) => g.name === "银杏")!.count;
+  assert.equal(autumn.matched, ginkgo);
+  assert.equal(autumn.phases.coloring, ginkgo);
+  assert.equal(autumn.unknown, autumn.total - ginkgo);
+  const winter = phenologyStats(dataset.features, catalog, "2026-12-20", "autumn_leaf");
+  assert.equal(winter.matched, 0);
+  assert.equal(winter.outside, ginkgo);
+  assert.equal(winter.unknown, autumn.unknown);
+  const filtered = phenologyStats(dataset.features, catalog, "2026-10-26", "autumn_leaf", null, false);
+  assert.equal(filtered.excluded, ginkgo);
+  assert.equal(filtered.unknown, autumn.unknown);
+  const selected = phenologyStats(dataset.features, catalog, "2026-11-05", "autumn_leaf", "银杏");
+  assert.equal(selected.total, ginkgo);
+  assert.equal(selected.phases.peak, ginkgo);
+  assert.equal(selected.unknown, 0);
+  const flowers = phenologyStats(dataset.features, catalog, "2026-03-16", "flowering");
+  assert.equal(flowers.phases.bloom, groups.find((g) => g.name === "山桃")!.count);
+  assert.equal(flowers.total, flowers.matched + flowers.outside + flowers.unknown + flowers.excluded);
+});
+
+test("a shared location is counted once even with duplicate records and mixed species stages", () => {
+  const mixed = structuredClone(catalog);
+  const peach = mixed.species.find((s) => s.display_name === "山桃")!;
+  peach.phases = [{ ...mixed.species.find((s) => s.display_name === "银杏")!.phases[0], id: "peak" }];
+  const feature = { ...dataset.features[0], properties: { ...dataset.features[0].properties, species: ["银杏", "山桃"] } };
+  const stats = phenologyStats([feature, feature], mixed, "2026-10-26", "autumn_leaf");
+  assert.equal(stats.total, 1);
+  assert.equal(stats.matched, 1);
+  assert.equal(stats.phases.peak, 1);
+  assert.equal(stats.phases.coloring, 0);
+});
 
 test("season lists require intervals for the chosen category; distribution retains unknown dates", () => {
   assert.deepEqual(

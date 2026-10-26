@@ -80,6 +80,8 @@ npm run data:sync -- --with-basemap --allow-stale
 
 ## 发布至 GitHub Pages
 
+主面板按所选日期、物候类型、物种和参考资料开关统计各阶段的植物分布处数。点击阶段卡片可筛选地图；每处 OSM 要素只计一次，多物种共用位置取匹配的较后阶段。已登记但不在日期区间内、缺少该类日期、被参考资料开关排除的记录分别统计，不推断现场状态或树木株数。
+
 项目仓库为 [sddzhyc/nku-seasons-map](https://github.com/sddzhyc/nku-seasons-map)。已提供每 6 小时同步并部署的工作流，以及拉取请求检查。**启用步骤、权限、失败恢复见 [部署说明](docs/DEPLOYMENT.md)**。部署成功后的站点地址为 `https://sddzhyc.github.io/nku-seasons-map/`，实际运行情况见仓库 Actions。
 
 ## 资料与许可

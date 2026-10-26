@@ -1,13 +1,14 @@
 :root {
-  font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: system-ui, "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
   color: #283d32;
   background: #f7f7f0;
   font-synthesis: none;
   font-size: 14px;
+  font-weight: 500;
   --green: #3d573d;
-  --muted: #8b9385;
+  --muted: #52634c;
   --line: #e3e6d9;
-  --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --serif: system-ui, "Microsoft YaHei", "PingFang SC", sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -105,9 +106,9 @@ button[hidden],
 }
 .brand small {
   display: block;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 2.5px;
-  color: #8f9785;
+  color: #52634c;
 }
 .site-header nav {
   display: flex;
@@ -118,7 +119,7 @@ button[hidden],
 }
 .site-header nav button {
   font-size: 13px;
-  color: #7e8879;
+  color: #52634c;
   padding: 0;
 }
 .site-header nav svg {
@@ -145,8 +146,8 @@ button[hidden],
   display: flex;
   align-items: center;
   gap: 9px;
-  font-size: 11px;
-  color: #7b8876;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 1px;
 }
 .live-dot {
@@ -170,12 +171,12 @@ main {
   padding: 34px 0 29px;
 }
 .eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 3px;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #8c967b;
+  color: #52634c;
 }
 .eyebrow > span {
   width: 18px;
@@ -196,7 +197,7 @@ main {
 .intro p {
   font-size: 12px;
   letter-spacing: 1px;
-  color: #8c9284;
+  color: #52634c;
   margin: 0;
 }
 .intro-note {
@@ -205,18 +206,18 @@ main {
   align-items: flex-end;
   font-size: 12px;
   line-height: 1.9;
-  color: #77846d;
+  color: #52634c;
   gap: 3px;
 }
 .intro-note .edition {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: #adb39f;
+  color: #52634c;
   margin-bottom: 7px;
 }
 .intro-note small {
-  font-size: 10px;
-  color: #9da491;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.5px;
 }
 .explorer {
@@ -242,9 +243,9 @@ main {
   padding: 27px 23px 18px;
 }
 .section-kicker {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2.3px;
-  color: #a0a88e;
+  color: #52634c;
 }
 .sidebar h2 {
   font-family: var(--serif);
@@ -262,16 +263,16 @@ main {
   height: 23px;
   border: 1px solid #dce2ce;
   border-radius: 50%;
-  font-size: 10px;
+  font-size: 12px;
   vertical-align: middle;
   letter-spacing: 0;
   font-weight: 500;
-  color: #798565;
+  color: #52634c;
   margin-left: 5px;
 }
 .sidebar-top p {
-  font-size: 11px;
-  color: #929b87;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.5px;
   margin: 0;
 }
@@ -289,7 +290,7 @@ main {
 }
 .search-wrap > svg {
   width: 15px;
-  color: #909c81;
+  color: #52634c;
 }
 .search-wrap input {
   min-width: 0;
@@ -297,11 +298,11 @@ main {
   background: transparent;
   border: 0;
   outline: none;
-  font-size: 11px;
+  font-size: 12px;
   color: #445a3a;
 }
 .search-wrap input::placeholder {
-  color: #a6ad9b;
+  color: #52634c;
 }
 .search-wrap:focus-within {
   border-color: #9daa85;
@@ -319,8 +320,8 @@ main {
   padding: 0 24px 10px;
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
-  color: #a0a991;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.8px;
 }
 .species-list {
@@ -393,16 +394,16 @@ main {
 }
 .species-name small {
   display: block;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 400;
-  color: #a0a58f;
+  color: #52634c;
   letter-spacing: 0.1px;
   margin-top: 2px;
 }
 .species-count {
-  font-family: Georgia, serif;
+  font-family: inherit;
   font-size: 15px;
-  color: #8a9777;
+  color: #52634c;
 }
 .row-arrow {
   width: 11px !important;
@@ -422,28 +423,28 @@ main {
 }
 .note-icon {
   padding-top: 1px;
-  color: #9fae84;
+  color: #52634c;
 }
 .note-icon svg {
   width: 17px;
 }
 .sidebar-note b {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.4px;
   font-weight: 500;
-  color: #7f8e6b;
+  color: #52634c;
 }
 .sidebar-note p {
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.9;
-  color: #a6ad99;
+  color: #52634c;
   margin: 5px 0 0;
 }
 .loading,
 .empty-state {
   padding: 25px 6px;
   text-align: center;
-  color: #9ca58c;
+  color: #52634c;
   font-size: 12px;
 }
 .empty-state svg {
@@ -456,7 +457,7 @@ main {
   font-weight: 500;
 }
 .empty-state p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.9;
 }
 .map-panel {
@@ -494,22 +495,22 @@ main {
   border: 1px solid #e1e7d5;
   border-radius: 6px;
   box-shadow: 0 2px 12px #34461a05;
-  font-size: 10px;
-  color: #8b967c;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.3px;
   backdrop-filter: blur(8px);
 }
 .map-heading b {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: #536747;
 }
 .separator {
-  color: #c1c8b3;
+  color: #52634c;
   margin: 0 2px;
 }
 .map-view button {
-  font-size: 10px;
+  font-size: 12px;
   height: 37px;
   padding: 0 12px;
   background: #fcfcf5ed;
@@ -531,13 +532,13 @@ main {
   z-index: 700;
 }
 .quick-filters button {
-  font-size: 10px;
+  font-size: 12px;
   background: #fcfcf5e8;
   border: 1px solid #dde4cf;
   border-radius: 20px;
   padding: 6px 11px;
   letter-spacing: 0.4px;
-  color: #7c8969;
+  color: #52634c;
 }
 .quick-filters button.active {
   background: #506849;
@@ -565,9 +566,9 @@ main {
   align-items: center;
   gap: 5px;
   margin-bottom: 10px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
-  color: #7b8d6d;
+  color: #52634c;
 }
 .north svg {
   height: 23px;
@@ -583,7 +584,7 @@ main {
   font-size: 20px;
   font-weight: 300;
   line-height: 1;
-  color: #708262;
+  color: #52634c;
 }
 .map-controls button svg {
   width: 16px;
@@ -627,13 +628,13 @@ main {
   font-weight: 500;
 }
 .selection-card p {
-  font-size: 9px;
-  color: #9ba48b;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.2px;
   margin: 6px 0 0;
 }
 .selection-card > span:last-child {
-  font-family: Georgia, serif;
+  font-family: inherit;
   font-size: 30px;
   color: var(--selection-color);
   line-height: 1;
@@ -648,9 +649,9 @@ main {
   display: flex;
   gap: 6px;
   align-items: center;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.4px;
-  color: #8a9679;
+  color: #52634c;
   pointer-events: none;
 }
 .outline-swatch {
@@ -662,13 +663,13 @@ main {
 }
 .caption-divider {
   padding: 0 3px;
-  color: #b0b99f;
+  color: #52634c;
 }
 .campus-label {
-  font-size: 9px;
+  font-size: 12px;
   text-align: center;
   white-space: normal;
-  color: #959b87;
+  color: #52634c;
   text-shadow:
     0 1px 2px #fffff6,
     1px 0 2px #fffff6,
@@ -707,12 +708,12 @@ main {
 }
 .leaflet-control-attribution {
   background: #fafbf2d9 !important;
-  font-size: 8px !important;
-  color: #91a17f !important;
+  font-size: 12px !important;
+  color: #52634c !important;
   padding: 2px 6px !important;
 }
 .leaflet-control-attribution a {
-  color: #788a66 !important;
+  color: #52634c !important;
 }
 .leaflet-control-scale {
   margin-bottom: 41px !important;
@@ -720,16 +721,16 @@ main {
   pointer-events: none;
 }
 .leaflet-control-scale-line {
-  font-size: 8px !important;
+  font-size: 12px !important;
   background: none !important;
   border-color: #99a88a !important;
-  color: #829472 !important;
+  color: #52634c !important;
   line-height: 1.4 !important;
   padding: 2px 4px !important;
 }
 .leaflet-tooltip {
   font:
-    11px "Microsoft YaHei",
+    12px "Microsoft YaHei",
     sans-serif;
   border-radius: 5px;
   border: 1px solid #e0e6d3;
@@ -762,9 +763,9 @@ main {
   color: #4d6345;
 }
 .popup-location strong {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
-  color: #7c8b6b;
+  color: #52634c;
 }
 .popup-location p {
   font-size: 13px;
@@ -773,13 +774,13 @@ main {
 }
 .popup-location small {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.6;
-  color: #8b977c;
+  color: #52634c;
 }
 .plant-popup > p {
-  font-size: 11px;
-  color: #8b977c;
+  font-size: 12px;
+  color: #52634c;
   margin: 0 0 15px;
 }
 .plant-popup dl {
@@ -789,23 +790,23 @@ main {
   padding: 12px 0;
   border-top: 1px solid #e7eadf;
   border-bottom: 1px solid #e7eadf;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
 .plant-popup dt {
-  color: #9ba28f;
+  color: #52634c;
 }
 .plant-popup dd {
   margin: 0;
   color: #5e6f52;
 }
 .plant-popup a {
-  font-size: 11px;
+  font-size: 12px;
   color: #7e8d51 !important;
 }
 .plant-popup p.popup-note {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
 }
 .tile-warning {
@@ -818,7 +819,7 @@ main {
   padding: 10px;
   border-radius: 5px;
   color: #927037;
-  font-size: 11px;
+  font-size: 12px;
 }
 .data-bar {
   display: flex;
@@ -826,9 +827,9 @@ main {
   justify-content: space-between;
   gap: 15px;
   padding: 16px 3px;
-  color: #929e83;
+  color: #52634c;
   border-bottom: 1px solid var(--line);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.3px;
 }
 .data-bar > div {
@@ -852,10 +853,10 @@ main {
   margin: 0 4px;
 }
 .data-bar button {
-  font-size: 9px;
+  font-size: 12px;
   padding: 0;
   white-space: nowrap;
-  color: #7c8c68;
+  color: #52634c;
 }
 .data-bar button svg {
   width: 12px;
@@ -873,8 +874,8 @@ footer {
   display: flex;
   justify-content: space-between;
   padding: 19px 0 23px;
-  font-size: 9px;
-  color: #a0a68f;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 0.7px;
   gap: 10px;
 }
@@ -894,9 +895,9 @@ footer a:hover {
   margin: 0 7px;
 }
 footer button {
-  font-size: 9px;
+  font-size: 12px;
   padding: 0;
-  color: #919c81;
+  color: #52634c;
 }
 footer svg {
   height: 11px;
@@ -935,7 +936,7 @@ dialog h2 {
 }
 dialog p {
   font-size: 12px;
-  color: #8d9781;
+  color: #52634c;
   line-height: 1.9;
 }
 dialog h3 {
@@ -967,10 +968,10 @@ dialog h3 {
 }
 .roadmap li {
   padding: 10px 0;
-  font-size: 10px;
+  font-size: 12px;
   display: flex;
   gap: 13px;
-  color: #a3ad94;
+  color: #52634c;
 }
 .roadmap li.done {
   color: #698348;
@@ -980,10 +981,10 @@ dialog h3 {
 }
 .roadmap li em {
   font-style: normal;
-  font-size: 9px;
+  font-size: 12px;
 }
 .dialog-link {
-  font-size: 11px;
+  font-size: 12px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1040,7 +1041,7 @@ dialog h3 {
     right: 15px;
   }
   .map-topbar .map-heading {
-    font-size: 9px;
+    font-size: 12px;
   }
   .quick-filters {
     left: 15px;
@@ -1077,16 +1078,16 @@ dialog h3 {
     white-space: nowrap;
   }
   .brand small {
-    font-size: 6px;
+    font-size: 12px;
     letter-spacing: 1.5px;
   }
   .site-header nav {
     transform: none;
     gap: 18px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .site-header nav button {
-    font-size: 11px;
+    font-size: 12px;
   }
   .header-location {
     display: none;
@@ -1105,11 +1106,11 @@ dialog h3 {
     margin: 10px 0;
   }
   .intro p {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.2px;
   }
   .eyebrow {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 2px;
   }
   .intro-note {
@@ -1145,7 +1146,7 @@ dialog h3 {
   }
   .sidebar-top p {
     display: inline-block;
-    font-size: 10px;
+    font-size: 12px;
   }
   .search-wrap {
     margin-bottom: 14px;
@@ -1170,10 +1171,10 @@ dialog h3 {
     width: 28px;
   }
   .species-name small {
-    font-size: 7px;
+    font-size: 12px;
   }
   .species-name {
-    font-size: 11px;
+    font-size: 12px;
   }
   .all-row {
     grid-column: 1/-1;
@@ -1192,12 +1193,12 @@ dialog h3 {
   }
   .map-heading {
     height: 34px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .map-view button {
     height: 34px;
     padding: 0 9px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .quick-filters {
     left: 14px;
@@ -1206,7 +1207,7 @@ dialog h3 {
   }
   .quick-filters button {
     padding: 6px 10px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .map-controls {
     right: 14px;
@@ -1219,10 +1220,10 @@ dialog h3 {
     padding: 13px 14px;
   }
   .selection-card b {
-    font-size: 11px;
+    font-size: 12px;
   }
   .selection-card p {
-    font-size: 8px;
+    font-size: 12px;
   }
   .selection-card > span:last-child {
     font-size: 26px;
@@ -1234,12 +1235,12 @@ dialog h3 {
   .map-caption {
     bottom: 22px;
     left: 14px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .data-bar {
     padding: 14px 2px;
     align-items: flex-start;
-    font-size: 8px;
+    font-size: 12px;
     gap: 10px;
   }
   .data-bar > div {
@@ -1254,21 +1255,21 @@ dialog h3 {
     padding-left: 10px;
   }
   .data-bar button {
-    font-size: 8px;
+    font-size: 12px;
     padding-top: 1px;
   }
   footer {
-    font-size: 8px;
+    font-size: 12px;
     flex-direction: column;
     gap: 12px;
     align-items: center;
     padding: 22px 0;
   }
   footer > span:first-child {
-    font-size: 10px;
+    font-size: 12px;
   }
   footer button {
-    font-size: 8px;
+    font-size: 12px;
   }
   .leaflet-control-scale {
     margin-left: 14px !important;
@@ -1291,8 +1292,8 @@ dialog h3 {
 }
 .show-key-labels .campus-label.key-label {
   display: block;
-  color: #7f9279;
-  font-size: 10px;
+  color: #52634c;
+  font-size: 12px;
 }
 
 .season-panel {
@@ -1320,7 +1321,7 @@ dialog h3 {
   padding: 8px 15px;
   font-size: 12px;
   border-radius: 5px;
-  color: #879477;
+  color: #52634c;
   letter-spacing: 0.5px;
 }
 .view-tabs button[aria-pressed="true"] {
@@ -1332,8 +1333,8 @@ dialog h3 {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
-  color: #81916e;
+  font-size: 12px;
+  color: #52634c;
 }
 .date-controls input {
   border: 1px solid #dbe3cc;
@@ -1351,12 +1352,12 @@ dialog h3 {
   padding: 7px 10px;
   background: #eaf0de;
   border-radius: 5px;
-  font-size: 11px;
+  font-size: 12px;
   color: #637c49;
 }
 .time-zone {
-  font-size: 9px;
-  color: #a4ae96;
+  font-size: 12px;
+  color: #52634c;
 }
 .season-options {
   border-top: 1px solid #eff1e6;
@@ -1371,8 +1372,8 @@ dialog h3 {
   gap: 15px;
 }
 .category-tabs button {
-  font-size: 11px;
-  color: #9aa58b;
+  font-size: 12px;
+  color: #52634c;
   padding: 4px 1px;
   border-bottom: 2px solid transparent;
 }
@@ -1380,37 +1381,13 @@ dialog h3 {
   color: #5c7747;
   border-color: #8c9f6d;
 }
-.phase-filters {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.phase-filters button {
-  padding: 6px 9px;
-  border-radius: 20px;
-  border: 1px solid transparent;
-  font-size: 10px;
-  color: #8f9b81;
-  white-space: nowrap;
-}
-.phase-filters button span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--phase-color);
-}
-.phase-filters button[aria-pressed="true"] {
-  background: #f0f3e6;
-  border-color: #dbe3cb;
-  color: #5b7149;
-}
 .reference-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-left: auto;
-  font-size: 10px;
-  color: #8f997f;
+  font-size: 12px;
+  color: #52634c;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1426,9 +1403,9 @@ dialog h3 {
   gap: 8px;
   padding: 10px 20px;
   background: #f2f4e9;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #919b7e;
+  color: #52634c;
 }
 .season-note > svg {
   height: 13px !important;
@@ -1438,7 +1415,7 @@ dialog h3 {
   flex: 1;
 }
 .season-note button {
-  font-size: 10px;
+  font-size: 12px;
   color: #7a8f5f;
   white-space: nowrap;
 }
@@ -1464,7 +1441,7 @@ dialog h3 {
 .map-empty > svg {
   display: block;
   margin: 0 auto 12px;
-  color: #9eae84;
+  color: #52634c;
   width: 26px !important;
   height: 26px !important;
 }
@@ -1474,16 +1451,16 @@ dialog h3 {
   font-weight: 500;
 }
 .map-empty p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #95a181;
+  color: #52634c;
   margin: 10px 0;
 }
 .map-empty button {
   padding: 8px 12px;
   border: 1px solid #d8e2c8;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 12px;
   color: #718b50;
 }
 .map-empty button svg {
@@ -1507,22 +1484,22 @@ dialog h3 {
 }
 .calendar-header h2 span {
   font-family: sans-serif;
-  font-size: 10px;
-  color: #9aa38a;
+  font-size: 12px;
+  color: #52634c;
   letter-spacing: 1px;
   margin-left: 18px;
 }
 .calendar-header button {
-  font-size: 10px;
-  color: #83966b;
+  font-size: 12px;
+  color: #52634c;
 }
 .calendar-header button svg {
   width: 13px;
 }
 .calendar-intro {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.9;
-  color: #939c84;
+  color: #52634c;
   max-width: 860px;
   margin: 4px 0 22px;
 }
@@ -1536,13 +1513,13 @@ dialog h3 {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 11px;
+  font-size: 12px;
 }
 .calendar-table th {
   font-weight: 400;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.5px;
-  color: #8a9878;
+  color: #52634c;
   padding: 15px 19px;
   background: #f0f3e6;
   white-space: nowrap;
@@ -1569,8 +1546,8 @@ dialog h3 {
 }
 .calendar-table td > small {
   display: block;
-  font-size: 9px;
-  color: #a1aa92;
+  font-size: 12px;
+  color: #52634c;
   margin-top: 8px;
 }
 .calendar-species {
@@ -1593,7 +1570,7 @@ dialog h3 {
   border-left: 2px solid var(--phase-color);
   background: #f4f6eb;
   border-radius: 0 4px 4px 0;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .calendar-range b {
@@ -1604,8 +1581,8 @@ dialog h3 {
 .calendar-range small {
   display: block;
   margin-top: 5px;
-  color: #a1aa92;
-  font-size: 9px;
+  color: #52634c;
+  font-size: 12px;
   white-space: normal;
 }
 .phase-badge {
@@ -1614,33 +1591,33 @@ dialog h3 {
   border: 1px solid color-mix(in srgb, var(--phase-color) 40%, white);
   border-radius: 20px;
   color: var(--phase-color);
-  font-size: 10px;
+  font-size: 12px;
   background: color-mix(in srgb, var(--phase-color) 6%, white);
 }
 .muted {
-  font-size: 10px;
-  color: #a1aa91;
+  font-size: 12px;
+  color: #52634c;
   line-height: 1.8;
 }
 .calendar-table details {
-  font-size: 10px;
-  color: #8a9977;
+  font-size: 12px;
+  color: #52634c;
   line-height: 1.8;
 }
 .calendar-table summary {
   cursor: pointer;
-  color: #85936f;
+  color: #52634c;
   white-space: nowrap;
 }
 .calendar-table details p {
-  font-size: 10px;
+  font-size: 12px;
   margin: 9px 0;
-  color: #9ba58b;
+  color: #52634c;
 }
 .calendar-table details a {
   display: block;
-  font-size: 10px;
-  color: #839368;
+  font-size: 12px;
+  color: #52634c;
   margin-top: 8px;
   overflow-wrap: anywhere;
 }
@@ -1650,12 +1627,12 @@ dialog h3 {
 .popup-source {
   display: block;
   margin: 9px 0;
-  font-size: 10px !important;
+  font-size: 12px !important;
   line-height: 1.8;
 }
 .site-header nav > a {
   font-size: 13px;
-  color: #7e8879;
+  color: #52634c;
 }
 @media (max-width: 1000px) {
   .season-toolbar {
@@ -1695,17 +1672,17 @@ dialog h3 {
     align-self: flex-start;
   }
   .view-tabs button {
-    font-size: 11px;
+    font-size: 12px;
     padding: 7px 12px;
   }
   .date-controls {
     justify-content: space-between;
-    font-size: 10px;
+    font-size: 12px;
   }
   .date-controls input {
     flex: 1;
     min-width: 0;
-    font-size: 11px;
+    font-size: 12px;
   }
   .time-zone {
     display: block;
@@ -1714,30 +1691,21 @@ dialog h3 {
     gap: 9px 14px;
     align-items: flex-start;
   }
-  .phase-filters {
-    order: 3;
-    width: 100%;
-    gap: 4px;
-  }
-  .phase-filters button {
-    font-size: 9px;
-    padding: 6px 8px;
-  }
   .reference-toggle {
     margin-left: auto;
     padding-top: 7px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .season-note {
     padding: 10px 13px;
-    font-size: 9px;
+    font-size: 12px;
     align-items: flex-start;
   }
   .season-note > svg {
     margin-top: 2px;
   }
   .season-note button {
-    font-size: 8px;
+    font-size: 12px;
     margin-top: 2px;
   }
   .season-note button svg {
@@ -1757,13 +1725,13 @@ dialog h3 {
     margin-top: 9px;
   }
   .calendar-header button {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 120px;
     text-align: right;
     line-height: 1.7;
   }
   .calendar-intro {
-    font-size: 10px;
+    font-size: 12px;
   }
   .calendar-table th,
   .calendar-table td {
@@ -1784,13 +1752,59 @@ dialog h3 {
     font-size: 12px;
   }
   .map-empty p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .map-empty > svg {
     height: 21px !important;
     width: 21px !important;
   }
   .map-empty button {
-    font-size: 9px;
+    font-size: 12px;
   }
+}
+
+/* High-contrast system typography and actionable stage statistics. */
+.site-header { height: 76px; }
+.brand b { font-size: 20px; letter-spacing: 0; }
+main { padding-top: 24px; }
+button, input { font-weight: 600; }
+h1, h2, h3, b, strong { font-weight: 750; }
+.species-name { font-size: 15px; }
+.species-count { font-family: inherit; font-weight: 750; }
+.sidebar-top h2 { font-size: 21px; }
+.sidebar-top { padding-bottom: 18px; }
+.season-note { line-height: 1.7; }
+.status-statistics { padding: 6px 20px 18px; }
+.statistics-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.statistics-heading h2 { margin: 0; font-size: 18px; color: #253e2e; }
+.statistics-heading > span { font-size: 12px; color: #52634c; }
+.phase-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.stat-card { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; padding: 14px 16px; border: 1px solid #dce2d4; border-top: 3px solid var(--phase-color, #a9b39d); border-radius: 8px; background: #fff; text-align: left; color: #253e2e; }
+.stat-card[aria-pressed="true"] { border-color: #526b3d; background: #edf2e4; box-shadow: 0 0 0 1px #526b3d; }
+button.stat-card:hover { background: #f0f4e9; color: #253e2e; }
+.stat-label { font-size: 14px; font-weight: 650; }
+.stat-value { font-size: 30px; font-weight: 750; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat-value small { font-size: 12px; font-weight: 500; margin-left: 6px; }
+.stat-neutral { background: #f5f6f0; }
+.popup-phase, .phase-badge, .range-tag { color: #344a30; }
+footer { justify-content: flex-end; }
+@media (max-width: 1000px) { .phase-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .site-header { height: auto; min-height: 68px; padding-top: 12px; padding-bottom: 12px; gap: 10px; }
+  .brand { gap: 8px; }
+  .brand b { font-size: 16px; letter-spacing: 0; line-height: 1.5; }
+  .brand-symbol { flex-shrink: 0; }
+  .site-header nav { flex-shrink: 0; }
+  main { padding-top: 14px; }
+  .view-tabs button, .date-controls, .date-controls input, .category-tabs button, .reference-toggle { font-size: 13px; }
+  .status-statistics { padding: 6px 13px 14px; }
+  .statistics-heading { gap: 6px; }
+  .statistics-heading h2 { font-size: 17px; }
+  .phase-filters { gap: 8px; }
+  .stat-card { padding: 11px 9px; gap: 7px; }
+  .stat-label { font-size: 13px; }
+  .stat-value { font-size: 26px; }
+  .season-note { flex-wrap: wrap; }
+  .season-note > span { flex: 1; min-width: 180px; }
+  .season-note button { margin-left: 22px; }
 }
