@@ -1,14 +1,11 @@
-import { readFile, writeFile, rename } from "node:fs/promises";
-import {
-  BBOX,
-  convertOsm,
-  ENDPOINTS,
-  OVERPASS_QUERY,
-  overpassUrl,
-} from "../src/data.js";
+import { readFile, writeFile, rename, appendFile } from "node:fs/promises";
+import { BBOX, OVERPASS_QUERY } from "../src/data.js";
 import { buildSiteData } from "./build-data.js";
 import { BASEMAP_QUERY } from "./campus-base.js";
 import { prepareSync } from "./sync-plan.js";
+import { queryOverpass, type OsmAttempt } from "./overpass-client.js";
+
+const attempts: Array<OsmAttempt & { query: "plants" | "background" }> = [];
 
 const inputIndex = process.argv.indexOf("--input");
 const bootstrap = process.argv.includes("--bootstrap");
@@ -38,31 +35,17 @@ async function loadRaw(
     if (!r.ok) throw new Error(`初始化失败 HTTP ${r.status}`);
     return { raw: await r.json(), source };
   }
-  const failures: string[] = [];
-  for (const source of ENDPOINTS) {
-    try {
-      const response = await fetch(
-        overpassUrl(source, background ? BASEMAP_QUERY : OVERPASS_QUERY),
-        {
-          headers: {
-            "User-Agent":
-              "NkuSeasonsMap/0.4 (https://sddzhyc.github.io/nku-seasons-map/)",
-            Accept: "application/json",
-          },
-          signal: AbortSignal.timeout(background ? 55000 : 35000),
-        },
-      );
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const raw = await response.json();
-      convertOsm(raw, source);
-      return { raw, source };
-    } catch (error) {
-      failures.push(`${source}: ${String(error)}`);
-    }
-  }
-  throw new Error(
-    "公共 OSM 查询不可用，已有快照保持不变。\n" + failures.join("\n"),
-  );
+  return queryOverpass(background ? BASEMAP_QUERY : OVERPASS_QUERY, {
+    timeoutMs: background ? 75_000 : 50_000,
+    report: (attempt) => {
+      const record = {
+        query: background ? ("background" as const) : ("plants" as const),
+        ...attempt,
+      };
+      attempts.push(record);
+      console.log("[OSM request] " + JSON.stringify(record));
+    },
+  });
 }
 async function sync() {
   const { dataset, outputs } = await prepareSync(loadRaw, {
@@ -79,12 +62,36 @@ async function sync() {
 }
 // Invalid YAML is always fatal, even when a network fallback is allowed.
 await buildSiteData();
+let outcome = "failed";
 try {
   await sync();
+  outcome = "updated";
 } catch (error) {
   if (!process.argv.includes("--allow-stale")) throw error;
+  outcome = "stale";
   console.warn(
     `::warning::OSM 同步失败；将使用最近有效快照。${String(error).replace(/\r?\n/g, " ")}`,
   );
+} finally {
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const snapshot = JSON.parse(
+      await readFile("public/data/species.json", "utf8"),
+    );
+    const lines = [
+      "## OSM 数据同步",
+      `- 本次结果：**${outcome}**（updated=成功获取，stale=沿用旧版，failed=失败）`,
+      `- 植物快照：${snapshot.features.length} 处，实际获取时间 ${snapshot.fetchedAt}`,
+      `- 数据来源：${snapshot.source}`,
+      "",
+      "| 查询 | 轮次 | 服务 | HTTP | 结果 | 用时 |",
+      "| --- | --- | --- | --- | --- | --- |",
+      ...attempts.map(
+        (a) =>
+          `| ${a.query} | ${a.round} | ${new URL(a.endpoint).hostname} | ${a.status ?? "network/timeout"} | ${a.outcome} | ${(a.elapsedMs / 1000).toFixed(1)}s |`,
+      ),
+      "",
+    ];
+    await appendFile(process.env.GITHUB_STEP_SUMMARY, lines.join("\n"));
+  }
 }
 console.log(await buildSiteData());
