@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "revision": "606bc4e7f4d5772b",
+  "revision": "d2b5d3b36d3965ec",
   "dataset": {
     "schemaVersion": 1,
-    "fetchedAt": "2026-10-23T15:14:58.785Z",
+    "fetchedAt": "2026-10-26T04:32:37.825Z",
     "source": "https://api.openstreetmap.org/api/0.6/map.json?bbox=117.314,38.971,117.366,39.006",
     "campus": {
       "type": "Feature",
@@ -349,12 +349,12 @@
                   38.9821549
                 ],
                 [
-                  117.3377947,
-                  38.9822953
+                  117.3378045,
+                  38.9822725
                 ],
                 [
-                  117.3377406,
-                  38.9820952
+                  117.3377616,
+                  38.9820909
                 ],
                 [
                   117.3382748,
@@ -1773,6 +1773,275 @@
       },
       {
         "type": "Feature",
+        "id": "way/1571626269",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.3430628,
+                38.9841901
+              ],
+              [
+                117.3429679,
+                38.9841193
+              ],
+              [
+                117.3429605,
+                38.9839978
+              ],
+              [
+                117.3430358,
+                38.983919
+              ],
+              [
+                117.3431809,
+                38.9839198
+              ],
+              [
+                117.3431995,
+                38.9841482
+              ],
+              [
+                117.3430628,
+                38.9841901
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "osmId": "way/1571626269",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "landuse": "forest",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "way/1571626270",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.3377787,
+                38.9840213
+              ],
+              [
+                117.3377059,
+                38.983829
+              ],
+              [
+                117.3377502,
+                38.9836772
+              ],
+              [
+                117.337975,
+                38.983902
+              ],
+              [
+                117.3379145,
+                38.9842374
+              ],
+              [
+                117.338015,
+                38.9843712
+              ],
+              [
+                117.3380168,
+                38.9846488
+              ],
+              [
+                117.337802,
+                38.9846539
+              ],
+              [
+                117.3377992,
+                38.9845006
+              ],
+              [
+                117.3376876,
+                38.9843358
+              ],
+              [
+                117.3377629,
+                38.9841731
+              ],
+              [
+                117.3377787,
+                38.9840213
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "osmId": "way/1571626270",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "landuse": "forest",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "way/1571626271",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.3375816,
+                38.98433
+              ],
+              [
+                117.337416,
+                38.9842208
+              ],
+              [
+                117.3375509,
+                38.9840668
+              ],
+              [
+                117.337669,
+                38.9840711
+              ],
+              [
+                117.337669,
+                38.9842056
+              ],
+              [
+                117.3375816,
+                38.98433
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "osmId": "way/1571626271",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "landuse": "forest",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "way/1571626272",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.339982,
+                38.9857874
+              ],
+              [
+                117.3398933,
+                38.9857993
+              ],
+              [
+                117.3397116,
+                38.9857433
+              ],
+              [
+                117.3397066,
+                38.9856769
+              ],
+              [
+                117.3399671,
+                38.9856738
+              ],
+              [
+                117.339982,
+                38.9857874
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "osmId": "way/1571626272",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "landuse": "forest",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "way/1571626274",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.3385985,
+                38.9825412
+              ],
+              [
+                117.3384979,
+                38.9826012
+              ],
+              [
+                117.3383818,
+                38.9825283
+              ],
+              [
+                117.3380017,
+                38.9824121
+              ],
+              [
+                117.3378003,
+                38.9824247
+              ],
+              [
+                117.3378769,
+                38.9823676
+              ],
+              [
+                117.3380522,
+                38.9823509
+              ],
+              [
+                117.3382308,
+                38.982388
+              ],
+              [
+                117.3384152,
+                38.9824846
+              ],
+              [
+                117.3385985,
+                38.9825412
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "osmId": "way/1571626274",
+          "species": [
+            "银杏"
+          ],
+          "tags": {
+            "landuse": "forest",
+            "species": "银杏"
+          }
+        }
+      },
+      {
+        "type": "Feature",
         "id": "way/1448582303",
         "geometry": {
           "type": "LineString",
@@ -2019,6 +2288,132 @@
             "species:wikidata": "Q3408638"
           }
         }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318470633",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3420504,
+            38.9856842
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318470633",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318470654",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3388255,
+            38.9857135
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318470654",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318470655",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3385128,
+            38.9854649
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318470655",
+          "species": [
+            "火炬树"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "火炬树"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318470674",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3384014,
+            38.9827416
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318470674",
+          "species": [
+            "樱花"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "樱花"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318492936",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3385419,
+            38.9823649
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318492936",
+          "species": [
+            "白蜡"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "白蜡"
+          }
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "node/14318492937",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            117.3390293,
+            38.9825359
+          ]
+        },
+        "properties": {
+          "osmId": "node/14318492937",
+          "species": [
+            "白蜡"
+          ],
+          "tags": {
+            "natural": "tree",
+            "species": "白蜡"
+          }
+        }
       }
     ]
   },
@@ -2257,7 +2652,7 @@
   "index": [
     {
       "name": "银杏",
-      "count": 10,
+      "count": 11,
       "osmIds": [
         "way/1448582299",
         "way/1448582300",
@@ -2268,9 +2663,24 @@
         "way/1448582305",
         "way/1448582306",
         "way/1449405219",
-        "way/1449405223"
+        "way/1449405223",
+        "way/1571626274"
       ],
       "phenologyId": "ginkgo"
+    },
+    {
+      "name": "火炬树",
+      "count": 7,
+      "osmIds": [
+        "node/14318470633",
+        "node/14318470654",
+        "node/14318470655",
+        "way/1571626269",
+        "way/1571626270",
+        "way/1571626271",
+        "way/1571626272"
+      ],
+      "phenologyId": null
     },
     {
       "name": "毛白杨",
@@ -2305,6 +2715,15 @@
       "phenologyId": "peach"
     },
     {
+      "name": "白蜡",
+      "count": 2,
+      "osmIds": [
+        "node/14318492936",
+        "node/14318492937"
+      ],
+      "phenologyId": null
+    },
+    {
       "name": "法桐",
       "count": 2,
       "osmIds": [
@@ -2321,6 +2740,15 @@
         "way/1489508110"
       ],
       "phenologyId": "crabapple"
+    },
+    {
+      "name": "樱花",
+      "count": 2,
+      "osmIds": [
+        "node/14318470674",
+        "way/1444302759"
+      ],
+      "phenologyId": "cherry"
     },
     {
       "name": "白梨",
@@ -2353,14 +2781,6 @@
         "way/1507434822"
       ],
       "phenologyId": "peony"
-    },
-    {
-      "name": "樱花",
-      "count": 1,
-      "osmIds": [
-        "way/1444302759"
-      ],
-      "phenologyId": "cherry"
     },
     {
       "name": "月季",
@@ -3941,6 +4361,14 @@
                 38.9845128
               ],
               [
+                117.3436315,
+                38.9848328
+              ],
+              [
+                117.3436833,
+                38.9853735
+              ],
+              [
                 117.3437529,
                 38.9860997
               ],
@@ -5195,6 +5623,10 @@
             [
               117.3465718,
               38.9860475
+            ],
+            [
+              117.3466088,
+              38.9863656
             ],
             [
               117.3466289,
@@ -6893,12 +7325,20 @@
               38.9877098
             ],
             [
+              117.3428885,
+              38.9864518
+            ],
+            [
               117.3428486,
               38.9860531
             ],
             [
               117.3427822,
               38.9853335
+            ],
+            [
+              117.3427652,
+              38.9851495
             ],
             [
               117.342704,
@@ -6960,6 +7400,10 @@
             [
               117.3428486,
               38.9860531
+            ],
+            [
+              117.3430018,
+              38.9860808
             ],
             [
               117.3432733,
@@ -8800,6 +9244,10 @@
               38.984215
             ],
             [
+              117.343161,
+              38.9844524
+            ],
+            [
               117.342704,
               38.9844862
             ]
@@ -8898,6 +9346,10 @@
             [
               117.3434615,
               38.986166
+            ],
+            [
+              117.3435074,
+              38.9861724
             ],
             [
               117.3436911,
@@ -10070,6 +10522,81 @@
           }
         ]
       },
+      "way/1571626269": {
+        "text": "铸园附近，公能南道沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430904064",
+            "name": "铸园",
+            "distanceMeters": 0
+          },
+          {
+            "osmId": "way/1430904057",
+            "name": "公能南道",
+            "distanceMeters": 38
+          }
+        ]
+      },
+      "way/1571626270": {
+        "text": "陶园附近，公能南道沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          },
+          {
+            "osmId": "way/1430904057",
+            "name": "公能南道",
+            "distanceMeters": 27
+          }
+        ]
+      },
+      "way/1571626271": {
+        "text": "陶园附近，尚美道沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          },
+          {
+            "osmId": "way/832080307",
+            "name": "尚美道",
+            "distanceMeters": 29
+          }
+        ]
+      },
+      "way/1571626272": {
+        "text": "中心图书馆附近，日新道沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/616829077",
+            "name": "中心图书馆",
+            "distanceMeters": 20
+          },
+          {
+            "osmId": "way/477379218",
+            "name": "日新道",
+            "distanceMeters": 49
+          }
+        ]
+      },
+      "way/1571626274": {
+        "text": "陶园附近",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          }
+        ]
+      },
       "way/1448582303": {
         "text": "陶园附近，翔宇路沿线",
         "source": "automatic",
@@ -10211,6 +10738,92 @@
             "osmId": "way/477379220",
             "name": "公能北道",
             "distanceMeters": 89
+          }
+        ]
+      },
+      "node/14318470633": {
+        "text": "中心图书馆附近，日新道沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/616829077",
+            "name": "中心图书馆",
+            "distanceMeters": 52
+          },
+          {
+            "osmId": "way/477379218",
+            "name": "日新道",
+            "distanceMeters": 39
+          }
+        ]
+      },
+      "node/14318470654": {
+        "text": "中心图书馆附近，公能西路沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/616829077",
+            "name": "中心图书馆",
+            "distanceMeters": 66
+          },
+          {
+            "osmId": "way/1430904056",
+            "name": "公能西路",
+            "distanceMeters": 43
+          }
+        ]
+      },
+      "node/14318470655": {
+        "text": "综合业务西楼附近，公能西路沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/616829078",
+            "name": "综合业务西楼",
+            "distanceMeters": 64
+          },
+          {
+            "osmId": "way/1430904056",
+            "name": "公能西路",
+            "distanceMeters": 19
+          }
+        ]
+      },
+      "node/14318470674": {
+        "text": "陶园附近",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          }
+        ]
+      },
+      "node/14318492936": {
+        "text": "陶园附近",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          }
+        ]
+      },
+      "node/14318492937": {
+        "text": "陶园附近，翔宇路沿线",
+        "source": "automatic",
+        "references": [
+          {
+            "osmId": "way/1430918550",
+            "name": "陶园",
+            "distanceMeters": 0
+          },
+          {
+            "osmId": "way/669715524",
+            "name": "翔宇路",
+            "distanceMeters": 77
           }
         ]
       }

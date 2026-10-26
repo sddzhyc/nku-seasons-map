@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revision": "606bc4e7f4d5772b",
+  "revision": "d2b5d3b36d3965ec",
   "species": [
     {
       "name": "银杏",
-      "count": 10,
+      "count": 11,
       "osmIds": [
         "way/1448582299",
         "way/1448582300",
@@ -15,9 +15,24 @@
         "way/1448582305",
         "way/1448582306",
         "way/1449405219",
-        "way/1449405223"
+        "way/1449405223",
+        "way/1571626274"
       ],
       "phenologyId": "ginkgo"
+    },
+    {
+      "name": "火炬树",
+      "count": 7,
+      "osmIds": [
+        "node/14318470633",
+        "node/14318470654",
+        "node/14318470655",
+        "way/1571626269",
+        "way/1571626270",
+        "way/1571626271",
+        "way/1571626272"
+      ],
+      "phenologyId": null
     },
     {
       "name": "毛白杨",
@@ -52,6 +67,15 @@
       "phenologyId": "peach"
     },
     {
+      "name": "白蜡",
+      "count": 2,
+      "osmIds": [
+        "node/14318492936",
+        "node/14318492937"
+      ],
+      "phenologyId": null
+    },
+    {
       "name": "法桐",
       "count": 2,
       "osmIds": [
@@ -68,6 +92,15 @@
         "way/1489508110"
       ],
       "phenologyId": "crabapple"
+    },
+    {
+      "name": "樱花",
+      "count": 2,
+      "osmIds": [
+        "node/14318470674",
+        "way/1444302759"
+      ],
+      "phenologyId": "cherry"
     },
     {
       "name": "白梨",
@@ -100,14 +133,6 @@
         "way/1507434822"
       ],
       "phenologyId": "peony"
-    },
-    {
-      "name": "樱花",
-      "count": 1,
-      "osmIds": [
-        "way/1444302759"
-      ],
-      "phenologyId": "cherry"
     },
     {
       "name": "月季",

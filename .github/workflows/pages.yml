@@ -24,8 +24,13 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Sync OSM with last-good fallback
-        run: npm run data:sync -- --with-basemap --allow-stale
+      - name: Sync plants (scheduled failures are fatal; background may stay cached)
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            npm run data:sync -- --with-basemap --allow-stale
+          else
+            npm run data:sync -- --with-basemap
+          fi
       - run: npm test
       - run: npm run build
         env:

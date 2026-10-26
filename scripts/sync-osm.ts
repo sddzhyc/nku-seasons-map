@@ -1,13 +1,22 @@
 import { readFile, writeFile, rename } from "node:fs/promises";
-import { BBOX, convertOsm, ENDPOINTS, OVERPASS_QUERY } from "../src/data.js";
+import {
+  BBOX,
+  convertOsm,
+  ENDPOINTS,
+  OVERPASS_QUERY,
+  overpassUrl,
+} from "../src/data.js";
 import { buildSiteData } from "./build-data.js";
-import { BASEMAP_QUERY, buildCampusBasemap } from "./campus-base.js";
+import { BASEMAP_QUERY } from "./campus-base.js";
+import { prepareSync } from "./sync-plan.js";
 
 const inputIndex = process.argv.indexOf("--input");
 const bootstrap = process.argv.includes("--bootstrap");
 const basemap =
   bootstrap || inputIndex >= 0 || process.argv.includes("--with-basemap");
-async function loadRaw(): Promise<{ raw: unknown; source: string }> {
+async function loadRaw(
+  background: boolean,
+): Promise<{ raw: unknown; source: string }> {
   if (inputIndex >= 0)
     return {
       raw: JSON.parse(
@@ -32,13 +41,17 @@ async function loadRaw(): Promise<{ raw: unknown; source: string }> {
   const failures: string[] = [];
   for (const source of ENDPOINTS) {
     try {
-      const response = await fetch(source, {
-        method: "POST",
-        body: new URLSearchParams({
-          data: basemap ? BASEMAP_QUERY : OVERPASS_QUERY,
-        }),
-        signal: AbortSignal.timeout(basemap ? 55000 : 35000),
-      });
+      const response = await fetch(
+        overpassUrl(source, background ? BASEMAP_QUERY : OVERPASS_QUERY),
+        {
+          headers: {
+            "User-Agent":
+              "NkuSeasonsMap/0.4 (https://sddzhyc.github.io/nku-seasons-map/)",
+            Accept: "application/json",
+          },
+          signal: AbortSignal.timeout(background ? 55000 : 35000),
+        },
+      );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const raw = await response.json();
       convertOsm(raw, source);
@@ -52,22 +65,16 @@ async function loadRaw(): Promise<{ raw: unknown; source: string }> {
   );
 }
 async function sync() {
-  const { raw, source } = await loadRaw();
-  const dataset = convertOsm(raw, source);
-  const outputs: Record<string, unknown> = { "species.json": dataset };
-  if (basemap)
-    outputs["campus.json"] = buildCampusBasemap(
-      raw,
-      dataset.campus,
-      source,
-      dataset.fetchedAt,
-    );
+  const { dataset, outputs } = await prepareSync(loadRaw, {
+    basemap,
+    strictBasemap: bootstrap || inputIndex >= 0,
+  });
   for (const [file, content] of Object.entries(outputs))
     await writeFile(`public/data/${file}.tmp`, JSON.stringify(content));
   for (const file of Object.keys(outputs))
     await rename(`public/data/${file}.tmp`, `public/data/${file}`);
   console.log(
-    `已更新 ${dataset.features.length} 个 OSM 要素${basemap ? "与校园简图" : ""}，获取时间 ${dataset.fetchedAt}`,
+    `已更新 ${dataset.features.length} 个 OSM 要素${outputs["campus.json"] ? "与校园简图" : basemap ? "（周边简图保留旧版）" : ""}，获取时间 ${dataset.fetchedAt}`,
   );
 }
 // Invalid YAML is always fatal, even when a network fallback is allowed.

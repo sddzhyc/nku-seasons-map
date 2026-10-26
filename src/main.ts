@@ -24,6 +24,7 @@ import {
   filterSpecies,
   groupSpecies,
   OVERPASS_QUERY,
+  overpassUrl,
   speciesColor,
   validDataset,
 } from "./data";
@@ -887,9 +888,7 @@ async function refresh(manual = false) {
     }
     for (const endpoint of ENDPOINTS) {
       try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          body: new URLSearchParams({ data: OVERPASS_QUERY }),
+        const response = await fetch(overpassUrl(endpoint, OVERPASS_QUERY), {
           signal: AbortSignal.timeout(15000),
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);

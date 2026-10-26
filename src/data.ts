@@ -10,8 +10,14 @@ export const BBOX = [117.314, 38.971, 117.366, 39.006] as const;
 export const OVERPASS_QUERY = `[out:json][timeout:25];way(${CAMPUS_WAY});map_to_area->.campus;(nwr["species"](area.campus);way(${CAMPUS_WAY}););out body;>;out skel qt;`;
 export const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
 ];
+
+export function overpassUrl(endpoint: string, query: string): string {
+  const url = new URL(endpoint);
+  url.searchParams.set("data", query);
+  return url.href;
+}
 
 export interface SpeciesFeature extends Feature {
   properties: {
