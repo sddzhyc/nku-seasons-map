@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
-  "revision": "d2b5d3b36d3965ec",
+  "revision": "7b069cfa9ea3fd4d",
   "dataset": {
     "schemaVersion": 1,
-    "fetchedAt": "2026-10-26T04:32:37.825Z",
-    "source": "https://api.openstreetmap.org/api/0.6/map.json?bbox=117.314,38.971,117.366,39.006",
+    "fetchedAt": "2026-10-26T04:58:53.799Z",
+    "source": "https://overpass-api.de/api/interpreter",
+    "osmTimestamp": "2026-10-26T04:57:02Z",
     "campus": {
       "type": "Feature",
       "id": "way/476603067",
