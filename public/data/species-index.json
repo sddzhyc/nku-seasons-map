@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revision": "1ce9ac3e17782874",
+  "revision": "fcc692b992c873cc",
   "species": [
     {
       "name": "银杏",
-      "count": 11,
+      "count": 12,
       "osmIds": [
         "way/1448582299",
         "way/1448582300",
@@ -16,21 +16,74 @@
         "way/1448582306",
         "way/1449405219",
         "way/1449405223",
-        "way/1571626274"
+        "way/1571626274",
+        "way/1574199428"
       ],
       "phenologyId": "ginkgo"
     },
     {
+      "name": "白蜡",
+      "count": 11,
+      "osmIds": [
+        "node/14318492936",
+        "node/14318492937",
+        "node/14338456894",
+        "node/14338456895",
+        "node/14338456896",
+        "node/14338598926",
+        "way/1574199429",
+        "way/1574199430",
+        "way/1574199431",
+        "way/1574199435",
+        "way/1574199436"
+      ],
+      "phenologyId": null
+    },
+    {
       "name": "火炬树",
-      "count": 7,
+      "count": 11,
       "osmIds": [
         "node/14318470633",
         "node/14318470654",
         "node/14318470655",
+        "node/14338598970",
+        "node/14338598971",
+        "node/14338598972",
         "way/1571626269",
         "way/1571626270",
         "way/1571626271",
-        "way/1571626272"
+        "way/1571626272",
+        "way/1574199444"
+      ],
+      "phenologyId": null
+    },
+    {
+      "name": "山桃",
+      "count": 10,
+      "osmIds": [
+        "node/13666429630",
+        "way/1449405222",
+        "way/1490938706",
+        "way/1490938707",
+        "way/1490938708",
+        "way/1491144012",
+        "way/1491172135",
+        "way/1491172136",
+        "way/1491172139",
+        "way/1491172142"
+      ],
+      "phenologyId": "peach"
+    },
+    {
+      "name": "五角枫",
+      "count": 6,
+      "osmIds": [
+        "node/14338598946",
+        "node/14338598947",
+        "node/14338598948",
+        "node/14338598949",
+        "node/14338598950",
+        "node/14338598973"
       ],
       "phenologyId": null
     },
@@ -55,25 +108,6 @@
         "way/1507434826"
       ],
       "phenologyId": "locust"
-    },
-    {
-      "name": "山桃",
-      "count": 3,
-      "osmIds": [
-        "node/13666429630",
-        "relation/20356937",
-        "way/1490938708"
-      ],
-      "phenologyId": "peach"
-    },
-    {
-      "name": "白蜡",
-      "count": 2,
-      "osmIds": [
-        "node/14318492936",
-        "node/14318492937"
-      ],
-      "phenologyId": null
     },
     {
       "name": "法桐",
@@ -103,12 +137,29 @@
       "phenologyId": "cherry"
     },
     {
+      "name": "元宝枫",
+      "count": 2,
+      "osmIds": [
+        "node/14338598962",
+        "node/14338598963"
+      ],
+      "phenologyId": null
+    },
+    {
       "name": "白梨",
       "count": 1,
       "osmIds": [
         "way/1412230607"
       ],
       "phenologyId": "pear"
+    },
+    {
+      "name": "构树",
+      "count": 1,
+      "osmIds": [
+        "node/14338598945"
+      ],
+      "phenologyId": null
     },
     {
       "name": "柳树",
