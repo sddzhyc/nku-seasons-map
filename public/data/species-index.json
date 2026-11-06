@@ -1,7 +1,26 @@
 {
   "schemaVersion": 1,
-  "revision": "7bc1eb41790ceb1e",
+  "revision": "857b27d474f8f7c2",
   "species": [
+    {
+      "name": "火炬树",
+      "count": 12,
+      "osmIds": [
+        "node/14318470633",
+        "node/14318470654",
+        "node/14318470655",
+        "node/14338598970",
+        "node/14338598971",
+        "node/14353779502",
+        "way/1571626269",
+        "way/1571626270",
+        "way/1571626271",
+        "way/1571626272",
+        "way/1574199444",
+        "way/1575994194"
+      ],
+      "phenologyId": null
+    },
     {
       "name": "银杏",
       "count": 12,
@@ -40,24 +59,6 @@
       "phenologyId": null
     },
     {
-      "name": "火炬树",
-      "count": 11,
-      "osmIds": [
-        "node/14318470633",
-        "node/14318470654",
-        "node/14318470655",
-        "node/14338598970",
-        "node/14338598971",
-        "node/14338598972",
-        "way/1571626269",
-        "way/1571626270",
-        "way/1571626271",
-        "way/1571626272",
-        "way/1574199444"
-      ],
-      "phenologyId": null
-    },
-    {
       "name": "山桃",
       "count": 10,
       "osmIds": [
@@ -76,14 +77,17 @@
     },
     {
       "name": "五角枫",
-      "count": 6,
+      "count": 9,
       "osmIds": [
         "node/14338598946",
         "node/14338598947",
         "node/14338598948",
         "node/14338598949",
         "node/14338598950",
-        "node/14338598973"
+        "node/14338598973",
+        "node/14353779508",
+        "way/1575994198",
+        "way/1575994199"
       ],
       "phenologyId": null
     },
@@ -108,6 +112,27 @@
         "way/1507434826"
       ],
       "phenologyId": "locust"
+    },
+    {
+      "name": "元宝枫",
+      "count": 4,
+      "osmIds": [
+        "node/14338598962",
+        "node/14338598963",
+        "node/14353768793",
+        "node/14353779507"
+      ],
+      "phenologyId": null
+    },
+    {
+      "name": "黄栌",
+      "count": 3,
+      "osmIds": [
+        "node/14353768799",
+        "node/14353768800",
+        "node/14353779501"
+      ],
+      "phenologyId": null
     },
     {
       "name": "法桐",
@@ -135,15 +160,6 @@
         "way/1444302759"
       ],
       "phenologyId": "cherry"
-    },
-    {
-      "name": "元宝枫",
-      "count": 2,
-      "osmIds": [
-        "node/14338598962",
-        "node/14338598963"
-      ],
-      "phenologyId": null
     },
     {
       "name": "白梨",

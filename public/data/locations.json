@@ -31,7 +31,7 @@
         ]
       },
       "properties": {
-        "name": "新闻与传播学院",
+        "name": "信息与传播学院",
         "kind": "building"
       }
     },
@@ -1794,6 +1794,14 @@
           [
             117.3342947,
             38.9908058
+          ],
+          [
+            117.3339369,
+            38.9906549
+          ],
+          [
+            117.3338215,
+            38.9906062
           ],
           [
             117.3336924,
@@ -5327,6 +5335,10 @@
             38.9847515
           ],
           [
+            117.3339586,
+            38.9850151
+          ],
+          [
             117.3341594,
             38.9855978
           ],
@@ -5591,6 +5603,10 @@
           [
             117.3347386,
             38.9891832
+          ],
+          [
+            117.334764,
+            38.9892628
           ],
           [
             117.335116,
@@ -7961,6 +7977,54 @@
         }
       ]
     },
+    "way/1575994194": {
+      "text": "铸园附近，公能南道沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1430904064",
+          "name": "铸园",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/1430904057",
+          "name": "公能南道",
+          "distanceMeters": 22
+        }
+      ]
+    },
+    "way/1575994198": {
+      "text": "铸园附近，公能南道沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1430904064",
+          "name": "铸园",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/1430904057",
+          "name": "公能南道",
+          "distanceMeters": 62
+        }
+      ]
+    },
+    "way/1575994199": {
+      "text": "兰溪附近，敬业南路沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1444302760",
+          "name": "兰溪",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/1453043361",
+          "name": "敬业南路",
+          "distanceMeters": 66
+        }
+      ]
+    },
     "way/1448582303": {
       "text": "陶园附近，翔宇路沿线",
       "source": "automatic",
@@ -8447,22 +8511,6 @@
         }
       ]
     },
-    "node/14338598972": {
-      "text": "箴园附近，公能南道沿线",
-      "source": "automatic",
-      "references": [
-        {
-          "osmId": "way/1431157137",
-          "name": "箴园",
-          "distanceMeters": 37
-        },
-        {
-          "osmId": "way/831713336",
-          "name": "公能南道",
-          "distanceMeters": 26
-        }
-      ]
-    },
     "node/14338598973": {
       "text": "综合业务西楼附近，公能南道沿线",
       "source": "automatic",
@@ -8476,6 +8524,118 @@
           "osmId": "way/1430904057",
           "name": "公能南道",
           "distanceMeters": 22
+        }
+      ]
+    },
+    "node/14353768793": {
+      "text": "兰溪附近，敬业南路沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1444302760",
+          "name": "兰溪",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/1453043361",
+          "name": "敬业南路",
+          "distanceMeters": 46
+        }
+      ]
+    },
+    "node/14353768799": {
+      "text": "菊圃附近，公能南道沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1431157131",
+          "name": "菊圃",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/669743713",
+          "name": "公能南道",
+          "distanceMeters": 75
+        }
+      ]
+    },
+    "node/14353768800": {
+      "text": "菊圃附近，敬业南路沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1431157131",
+          "name": "菊圃",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/1453043361",
+          "name": "敬业南路",
+          "distanceMeters": 71
+        }
+      ]
+    },
+    "node/14353779501": {
+      "text": "箴园附近，公能南道沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1431157137",
+          "name": "箴园",
+          "distanceMeters": 40
+        },
+        {
+          "osmId": "way/1444302765",
+          "name": "公能南道",
+          "distanceMeters": 23
+        }
+      ]
+    },
+    "node/14353779502": {
+      "text": "箴园附近，公能南道沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1431157137",
+          "name": "箴园",
+          "distanceMeters": 29
+        },
+        {
+          "osmId": "way/831713336",
+          "name": "公能南道",
+          "distanceMeters": 18
+        }
+      ]
+    },
+    "node/14353779507": {
+      "text": "秀山堂附近，乐群北路沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1430918553",
+          "name": "秀山堂",
+          "distanceMeters": 10
+        },
+        {
+          "osmId": "way/669743704",
+          "name": "乐群北路",
+          "distanceMeters": 11
+        }
+      ]
+    },
+    "node/14353779508": {
+      "text": "水墨端园附近，公能东路沿线",
+      "source": "automatic",
+      "references": [
+        {
+          "osmId": "way/1453043363",
+          "name": "水墨端园",
+          "distanceMeters": 0
+        },
+        {
+          "osmId": "way/477108144",
+          "name": "公能东路",
+          "distanceMeters": 24
         }
       ]
     }
