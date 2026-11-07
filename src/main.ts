@@ -106,7 +106,7 @@ document.querySelector("#app")!.innerHTML = `
         <div class="map-topbar"><div class="map-heading"><span class="live-dot"></span><b>津南校园</b><span class="separator">/</span><span id="map-selection">全部物种</span></div><div class="map-view"><button id="base-toggle" aria-label="切换到${streetConfig.name}"><i data-lucide="layers"></i><span>校园简图</span></button></div></div>
         <div id="quick-filters" class="quick-filters" aria-label="快捷物种筛选"></div>
         <div id="map-empty" class="map-empty" hidden><i data-lucide="leaf"></i><b>暂无符合条件的物候记录</b><p id="empty-description">可以换个日期，或查看全部植物分布。</p><button id="empty-distribution">查看物种分布 <i data-lucide="arrow-right"></i></button></div>
-        <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="locate-me" aria-label="显示我的位置" title="显示我的位置"><i data-lucide="map-pin"></i></button><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div><div id="location-status" class="location-status" role="status" aria-live="polite" hidden></div>
+        <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="fullscreen-map" aria-label="全屏地图" title="全屏地图" aria-pressed="false">⛶</button><button id="locate-me" aria-label="显示我的位置" title="显示我的位置"><i data-lucide="map-pin"></i></button><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div><div id="location-status" class="location-status" role="status" aria-live="polite" hidden></div>
         <div id="selection-card" class="selection-card"><span class="card-icon"><i data-lucide="trees"></i></span><div><b id="selection-title">校园植物图鉴</b><p id="selection-description">正在加载真实 OSM 要素</p></div><span id="selection-number">—</span></div>
         <div class="map-caption"><span class="outline-swatch"></span>校园边界 <span id="context-caption"><span class="caption-divider">·</span> 周边随距离淡化</span> <span class="caption-divider">·</span> 点击标记查看植物</div>
         <div id="tile-warning" class="tile-warning" role="status" hidden>标准底图暂未加载，可切回校园简图。</div>
@@ -181,7 +181,7 @@ const tileLayers = streetConfig.urls.map((url, index) =>
 );
 const streetLayer = L.layerGroup(tileLayers);
 const popupOptions: L.PopupOptions = {
-  maxWidth: 310,
+  maxWidth: Math.min(310, Math.max(200, window.innerWidth - 80)),
   maxHeight: 260,
   autoPanPaddingTopLeft: L.point(20, 110),
   autoPanPaddingBottomRight: L.point(45, 105),
@@ -205,6 +205,19 @@ function fitCampus() {
       maxZoom: 16,
     });
 }
+const mapPanel = document.querySelector<HTMLElement>(".map-panel")!;
+function setMapFullscreen(enabled: boolean) {
+  mapPanel.classList.toggle("map-fullscreen", enabled);
+  document.body.classList.toggle("map-fullscreen-open", enabled);
+  const button = $("fullscreen-map");
+  button.setAttribute("aria-pressed", String(enabled));
+  button.setAttribute("aria-label", enabled ? "退出全屏地图" : "全屏地图");
+  button.title = enabled ? "退出全屏地图" : "全屏地图";
+  button.textContent = enabled ? "×" : "⛶";
+  requestAnimationFrame(() => map.invalidateSize());
+}
+$("fullscreen-map").onclick = () => setMapFullscreen(!mapPanel.classList.contains("map-fullscreen"));
+document.addEventListener("keydown", (event) => { if (event.key === "Escape" && mapPanel.classList.contains("map-fullscreen")) setMapFullscreen(false); });
 $("fit-campus").onclick = fitCampus;
 let userLocation: L.LayerGroup | undefined;
 $("locate-me").onclick = () => {
