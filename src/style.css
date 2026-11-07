@@ -1865,3 +1865,17 @@ body.map-fullscreen-open { overflow: hidden; }
   .map-panel:not(.map-fullscreen) .selection-card { display: none; }
   .map-panel.map-fullscreen .map-topbar { top: max(15px, env(safe-area-inset-top)); }
 }
+
+/* Keep the map unobstructed on phones while retaining its controls. */
+@media (max-width: 760px) {
+  .map-heading, .map-caption, .north, .selection-card { display: none; }
+  .map-topbar { justify-content: flex-start; left: 10px; right: auto; top: 10px; }
+  .map-panel.map-fullscreen .map-topbar { top: max(10px, env(safe-area-inset-top)); }
+  .map-view button { height: 32px; padding: 0 9px; }
+  .quick-filters { left: 10px; right: 52px; top: 50px; }
+  .quick-filters button { padding: 5px 8px; }
+  .map-controls { right: 10px; top: max(10px, env(safe-area-inset-top)); gap: 4px; }
+  .map-controls button { width: 33px; height: 33px; }
+  .location-status { top: 90px; right: 49px; max-width: min(235px, 70%); }
+  .leaflet-control-scale { margin-bottom: 3px !important; }
+}
