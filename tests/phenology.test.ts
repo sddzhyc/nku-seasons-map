@@ -44,7 +44,7 @@ test("annual ranges include both endpoints, cross years, and respect Shanghai mi
 
 test("actual catalog transitions from coloring to peak to falling and works across years", () => {
   assert.equal(
-    phaseFor("银杏", "2026-10-31", "autumn_leaf", catalog)?.phase.id,
+    phaseFor("银杏", "2026-10-30", "autumn_leaf", catalog)?.phase.id,
     "coloring",
   );
   assert.equal(
@@ -56,7 +56,7 @@ test("actual catalog transitions from coloring to peak to falling and works acro
     "peak",
   );
   assert.equal(
-    phaseFor("银杏", "2026-11-13", "autumn_leaf", catalog)?.phase.id,
+    phaseFor("银杏", "2026-11-15", "autumn_leaf", catalog)?.phase.id,
     "falling",
   );
   assert.equal(
@@ -68,8 +68,8 @@ test("actual catalog transitions from coloring to peak to falling and works acro
     "bloom",
   );
   assert.equal(
-    phaseFor("毛白杨", "2026-11-01", "autumn_leaf", catalog),
-    undefined,
+    phaseFor("毛白杨", "2026-11-01", "autumn_leaf", catalog)?.phase.id,
+    "peak",
   );
 });
 
@@ -92,7 +92,7 @@ test("invalid days, overlapping endpoints, cross-year overlaps, duplicate aliase
       c.species[0].phases[0].start = "02-30";
     },
     (c) => {
-      c.species[0].phases[1].start = "10-31";
+      c.species[0].phases[1].start = "10-30";
     },
     (c) => {
       c.species[0].phases[0].start = "11-01";

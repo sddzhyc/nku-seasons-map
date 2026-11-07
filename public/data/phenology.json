@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-23",
+  "updated_at": "2026-11-07",
   "disclaimer": "物候参考由历史资料与维护者初始推定整理，尚未完成津南校区逐日观测校准。颜色表示所选日期的参考阶段，不代表现场实时叶况；天气和个体差异会使时间提前或推迟。",
   "sources": [
     {
@@ -27,6 +27,12 @@
       "title": "今晚报园林负责人访谈：山桃玉兰海棠红（2026-03-21）",
       "url": "https://news.enorth.com.cn/system/2026/03/21/059242643.shtml",
       "scope": "天津山桃3月开放的一般时段；非津南校区连续观测。"
+    },
+    {
+      "id": "temporary-autumn-default",
+      "title": "维护者临时统一日期（2026-11-07）",
+      "url": "https://github.com/sddzhyc/nku-seasons-map",
+      "scope": "按用户要求设置的统一占位区间，未经实地观测，不作为树种物候证据。"
     }
   ],
   "species": [
@@ -40,33 +46,34 @@
       "verification": "reference",
       "source_ids": [
         "tianjin-autumn",
-        "nankai-leaves"
+        "nankai-leaves",
+        "temporary-autumn-default"
       ],
-      "note": "初染、浓色和落叶的日界为初始推定；资料仅支持天津深秋赏杏及校园11月落叶现象。各阶段实际可重叠，本参考模型用互不重叠的主阶段表示。",
+      "note": "初染、浓色和落叶的日界为初始推定；资料仅支持天津深秋赏杏及校园11月落叶现象。各阶段实际可重叠，本参考模型用互不重叠的主阶段表示。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
       "phases": [
         {
           "id": "coloring",
           "category": "autumn_leaf",
-          "start": "10-20",
-          "end": "10-31",
+          "start": "10-17",
+          "end": "10-30",
           "label": "初染",
-          "description": "10月下旬，绿黄相间"
+          "description": "10月下旬，临时参考"
         },
         {
           "id": "peak",
           "category": "autumn_leaf",
-          "start": "11-01",
-          "end": "11-12",
+          "start": "10-31",
+          "end": "11-14",
           "label": "叶色正浓",
-          "description": "11月上旬至中旬，金黄渐浓"
+          "description": "10月底至11月中旬，临时参考"
         },
         {
           "id": "falling",
           "category": "autumn_leaf",
-          "start": "11-13",
-          "end": "11-30",
+          "start": "11-15",
+          "end": "11-28",
           "label": "开始落叶",
-          "description": "11月中下旬，枝叶与落叶同赏"
+          "description": "11月中下旬，临时参考"
         }
       ]
     },
@@ -81,9 +88,10 @@
       "verification": "reference",
       "source_ids": [
         "nankai-peach",
-        "tianjin-peach"
+        "tianjin-peach",
+        "temporary-autumn-default"
       ],
-      "note": "三月花期有历史资料支持；初绽、盛开及落花的具体日界为维护者待校准推定，不适用于当年精确预报。",
+      "note": "三月花期有历史资料支持；初绽、盛开及落花的具体日界为维护者待校准推定，不适用于当年精确预报。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
       "phases": [
         {
           "id": "budding",
@@ -108,6 +116,30 @@
           "end": "03-31",
           "label": "落花",
           "description": "3月下旬，花落新叶生"
+        },
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
         }
       ]
     },
@@ -119,9 +151,36 @@
         "Populus tomentosa"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "尚缺津南校区可校准的物候资料，暂不填写日期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "尚缺津南校区可校准的物候资料，暂不填写日期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "plane",
@@ -133,9 +192,36 @@
         "Platanus hispanica"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "俗名可能对应不同悬铃木，确认物种与本地观测后补充。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "俗名可能对应不同悬铃木，确认物种与本地观测后补充。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "willow",
@@ -144,9 +230,36 @@
         "柳树"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "OSM 标签未细分树种，等待校准。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "OSM 标签未细分树种，等待校准。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "pear",
@@ -156,9 +269,36 @@
         "Pyrus bretschneideri"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "尚无本地校准日期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "尚无本地校准日期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "crabapple",
@@ -168,9 +308,36 @@
         "Malus micromalus"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "尚无本地校准日期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "尚无本地校准日期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "plum",
@@ -179,9 +346,36 @@
         "美人梅"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "尚无本地校准日期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "尚无本地校准日期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "cherry",
@@ -190,9 +384,36 @@
         "樱花"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "需确认品种后再填写花期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "需确认品种后再填写花期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     },
     {
       "id": "rose",
@@ -224,9 +445,264 @@
         "香花槐"
       ],
       "verification": "reference",
-      "source_ids": [],
-      "note": "尚无本地校准日期。",
-      "phases": []
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "尚无本地校准日期。 秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "sumac",
+      "display_name": "火炬树",
+      "osm_species_values": [
+        "火炬树"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "ash",
+      "display_name": "白蜡",
+      "osm_species_values": [
+        "白蜡"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "five-lobed-maple",
+      "display_name": "五角枫",
+      "osm_species_values": [
+        "五角枫"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "painted-maple",
+      "display_name": "元宝枫",
+      "osm_species_values": [
+        "元宝枫"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "smoketree",
+      "display_name": "黄栌",
+      "osm_species_values": [
+        "黄栌"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
+    },
+    {
+      "id": "paper-mulberry",
+      "display_name": "构树",
+      "osm_species_values": [
+        "构树"
+      ],
+      "verification": "reference",
+      "source_ids": [
+        "temporary-autumn-default"
+      ],
+      "note": "秋叶日期是统一临时占位值，尚未经现场观测校准。",
+      "phases": [
+        {
+          "id": "coloring",
+          "category": "autumn_leaf",
+          "start": "10-17",
+          "end": "10-30",
+          "label": "初染",
+          "description": "10月下旬，临时参考"
+        },
+        {
+          "id": "peak",
+          "category": "autumn_leaf",
+          "start": "10-31",
+          "end": "11-14",
+          "label": "叶色正浓",
+          "description": "10月底至11月中旬，临时参考"
+        },
+        {
+          "id": "falling",
+          "category": "autumn_leaf",
+          "start": "11-15",
+          "end": "11-28",
+          "label": "开始落叶",
+          "description": "11月中下旬，临时参考"
+        }
+      ]
     }
   ],
   "poi_overrides": []

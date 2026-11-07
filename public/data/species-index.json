@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "00689fbc6cbc5c6b",
+  "revision": "964d9d2b727ed786",
   "species": [
     {
       "name": "火炬树",
@@ -19,7 +19,7 @@
         "way/1574199444",
         "way/1575994194"
       ],
-      "phenologyId": null
+      "phenologyId": "sumac"
     },
     {
       "name": "银杏",
@@ -56,7 +56,7 @@
         "way/1574199435",
         "way/1574199436"
       ],
-      "phenologyId": null
+      "phenologyId": "ash"
     },
     {
       "name": "山桃",
@@ -89,7 +89,7 @@
         "way/1575994198",
         "way/1575994199"
       ],
-      "phenologyId": null
+      "phenologyId": "five-lobed-maple"
     },
     {
       "name": "毛白杨",
@@ -122,7 +122,7 @@
         "node/14353768793",
         "node/14353779507"
       ],
-      "phenologyId": null
+      "phenologyId": "painted-maple"
     },
     {
       "name": "黄栌",
@@ -132,7 +132,7 @@
         "node/14353768800",
         "node/14353779501"
       ],
-      "phenologyId": null
+      "phenologyId": "smoketree"
     },
     {
       "name": "法桐",
@@ -175,7 +175,7 @@
       "osmIds": [
         "node/14338598945"
       ],
-      "phenologyId": null
+      "phenologyId": "paper-mulberry"
     },
     {
       "name": "柳树",
