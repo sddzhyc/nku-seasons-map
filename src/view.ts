@@ -1,6 +1,6 @@
 import type { SpeciesFeature, SpeciesGroup } from "./data";
 import {
-  PHASES, phaseFor, recordFor, type Catalog, type Category,
+  PHASES, phaseFor, recordForLocation, type Catalog, type Category,
 } from "./phenology";
 
 // Count locations, not trees or species tags. Mixed-species locations use the
@@ -25,13 +25,13 @@ export function phenologyStats(
     total: locations.size, matched: 0, outside: 0, unknown: 0, excluded: 0,
     phases: Object.fromEntries(PHASES[category].map((p) => [p.id, 0])),
   };
-  for (const names of locations.values()) {
+  for (const [osmId, names] of locations) {
     const configured = [...names].filter((name) => catalog &&
-      recordFor(name, catalog)?.phases.some((p) => p.category === category));
+      recordForLocation(name, osmId, category, catalog)?.phases.some((p) => p.category === category));
     const eligible = configured.filter((name) => includeReferences ||
-      recordFor(name, catalog!)?.verification === "verified");
+      recordForLocation(name, osmId, category, catalog!)?.verification === "verified");
     const matches = eligible.map((name) =>
-      phaseFor(name, date, category, catalog!, includeReferences));
+      phaseFor(name, date, category, catalog!, includeReferences, osmId));
     const phase = [...PHASES[category]].reverse().find((p) =>
       matches.some((m) => m?.phase.id === p.id));
     if (phase) {
@@ -60,11 +60,10 @@ export function groupsForView(
   if (mode === "distribution") return groups;
   if (!catalog) return [];
   return groups.filter((group) => {
-    const record = recordFor(group.name, catalog);
-    return (
-      record &&
-      (includeReferences || record.verification === "verified") &&
-      record.phases.some((phase) => phase.category === category)
-    );
+    return group.features.some((feature) => {
+      const record = recordForLocation(group.name, feature.properties.osmId, category, catalog);
+      return record && (includeReferences || record.verification === "verified") &&
+        record.phases.some((phase) => phase.category === category);
+    });
   });
 }

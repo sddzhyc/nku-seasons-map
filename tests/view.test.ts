@@ -49,6 +49,27 @@ test("a shared location is counted once even with duplicate records and mixed sp
   assert.equal(stats.phases.coloring, 0);
 });
 
+test("POI dates override the species schedule only for the specified location", () => {
+  const modified = structuredClone(catalog);
+  const group = groups.find((g) => g.name === "银杏")!;
+  const feature = group.features[0];
+  modified.poi_overrides = [{
+    osm_id: feature.properties.osmId, species_id: "ginkgo", category: "autumn_leaf",
+    verification: "reference", source_ids: ["tianjin-autumn"], note: "现场记录",
+    phases: [{ id: "falling", category: "autumn_leaf", start: "10-20", end: "10-31", label: "开始落叶", description: "现场记录" }],
+  }];
+  validateCatalog(modified);
+  const stats = phenologyStats(group.features, modified, "2026-10-26", "autumn_leaf", "银杏");
+  assert.equal(stats.phases.falling, 1);
+  assert.equal(stats.phases.coloring, group.count - 1);
+  const november = phenologyStats(group.features, modified, "2026-11-05", "autumn_leaf", "银杏");
+  assert.equal(november.outside, 1);
+  assert.equal(november.phases.peak, group.count - 1);
+  modified.poi_overrides[0].osm_id = "way/1";
+  modified.poi_overrides[0].phases[0].start = "02-30";
+  assert.throws(() => validateCatalog(modified));
+});
+
 test("season lists require intervals for the chosen category; distribution retains unknown dates", () => {
   assert.deepEqual(
     groupsForView(groups, catalog, "season", "autumn_leaf").map((g) => g.name),

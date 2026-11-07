@@ -33,6 +33,16 @@ export interface Catalog {
   disclaimer: string;
   sources: Source[];
   species: SpeciesRecord[];
+  poi_overrides?: PoiOverride[];
+}
+export interface PoiOverride {
+  osm_id: string;
+  species_id: string;
+  category: Category;
+  verification: Verification;
+  source_ids: string[];
+  note: string;
+  phases: Phase[];
 }
 export interface Match {
   record: SpeciesRecord;
@@ -100,8 +110,9 @@ export function phaseFor(
   category: Category,
   catalog: Catalog,
   includeReferences = true,
+  osmId?: string,
 ): Match | undefined {
-  const record = recordFor(name, catalog);
+  const record = recordForLocation(name, osmId, category, catalog);
   if (
     !validDate(date) ||
     !record ||
@@ -114,6 +125,12 @@ export function phaseFor(
   );
   return phase ? { record, phase } : undefined;
 }
+export function recordForLocation(name: string, osmId: string | undefined, category: Category, catalog: Catalog): SpeciesRecord | undefined {
+  const base = recordFor(name, catalog);
+  if (!base) return;
+  const override = catalog.poi_overrides?.find((o) => o.osm_id === osmId && o.species_id === base.id && o.category === category);
+  return override ? { ...base, ...override, phases: override.phases } : base;
+}
 export function matchesFor(
   feature: SpeciesFeature,
   date: string,
@@ -122,7 +139,7 @@ export function matchesFor(
   includeReferences = true,
 ): Match[] {
   return feature.properties.species
-    .map((name) => phaseFor(name, date, category, catalog, includeReferences))
+    .map((name) => phaseFor(name, date, category, catalog, includeReferences, feature.properties.osmId))
     .filter((m): m is Match => !!m);
 }
 export function phaseColor(category: Category, id: string): string {
@@ -228,6 +245,20 @@ export function validateCatalog(input: unknown): Catalog {
         )
           fail(`${s.id} ${category} 在 ${day} 存在区间重叠`);
       }
+  }
+  if (c.poi_overrides !== undefined) {
+    if (!Array.isArray(c.poi_overrides)) fail("poi_overrides 必须是列表");
+    const keys = new Set<string>();
+    for (const o of c.poi_overrides) {
+      if (!o || !/^(node|way|relation)\/[1-9]\d*$/.test(o.osm_id) || !["autumn_leaf", "flowering"].includes(o.category)) fail("POI 标识或类别无效");
+      const base = c.species.find((s) => s.id === o.species_id);
+      if (!base) fail(`POI 物种不存在：${o.species_id}`);
+      const key = `${o.osm_id}:${o.species_id}:${o.category}`;
+      if (keys.has(key)) fail(`POI 配置重复：${key}`);
+      keys.add(key);
+      if (!Array.isArray(o.phases) || o.phases.some((p) => p.category !== o.category)) fail(`POI 区间类别不一致：${key}`);
+      validateCatalog({ ...c, poi_overrides: undefined, species: [{ ...base!, verification: o.verification, source_ids: o.source_ids, note: o.note, phases: o.phases }] });
+    }
   }
   return c;
 }

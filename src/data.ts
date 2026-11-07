@@ -185,6 +185,7 @@ export const palette = [
   "#909b72",
 ];
 export function speciesColor(name: string, groups: SpeciesGroup[]): string {
+  if (/枫|槭|黄栌|火炬树|火炬手树|acer|rhus|cotinus/i.test(name)) return "#b83e35";
   const known: Record<string, string> = {
     银杏: "#c79925",
     山桃: "#bb795c",

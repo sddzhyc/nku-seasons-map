@@ -35,6 +35,7 @@ import {
   PHASES,
   phaseFor,
   recordFor,
+  recordForLocation,
   matchesFor,
   phaseColor,
   validateCatalog,
@@ -358,6 +359,10 @@ function popup(feature: SpeciesFeature) {
   const title = document.createElement("h3");
   title.textContent = feature.properties.species.join(" · ");
   root.append(title);
+  const identifier = document.createElement("p");
+  identifier.className = "poi-identifier";
+  identifier.textContent = `位置编号：${feature.properties.osmId}`;
+  root.append(identifier);
   const position = describeLocation(
     feature,
     data!.campus,
@@ -407,7 +412,7 @@ function popup(feature: SpeciesFeature) {
   const matching = feature.properties.species
     .map((name) =>
       catalog
-        ? phaseFor(name, date, category, catalog, includeReferences)
+        ? phaseFor(name, date, category, catalog, includeReferences, feature.properties.osmId)
         : undefined,
     )
     .filter((m): m is Match => !!m);
@@ -417,7 +422,7 @@ function popup(feature: SpeciesFeature) {
   root.append(note);
   if (catalog)
     for (const name of feature.properties.species) {
-      const record = recordFor(name, catalog);
+      const record = recordForLocation(name, feature.properties.osmId, category, catalog);
       if (!record) continue;
       const detail = document.createElement("p");
       detail.textContent = record.note;
@@ -449,7 +454,7 @@ function popup(feature: SpeciesFeature) {
 function activeMatch(feature: SpeciesFeature): Match | undefined {
   if (!catalog) return;
   const matches = selected
-    ? [phaseFor(selected, date, category, catalog, includeReferences)].filter(
+    ? [phaseFor(selected, date, category, catalog, includeReferences, feature.properties.osmId)].filter(
         (m): m is Match => !!m,
       )
     : matchesFor(feature, date, category, catalog, includeReferences);
@@ -460,6 +465,14 @@ function activeMatch(feature: SpeciesFeature): Match | undefined {
         PHASES[category].findIndex((p) => p.id === a.phase.id),
     )[0];
   return match && (phaseFilter === "all" || match.phase.id === phaseFilter) ? match : undefined;
+}
+
+function leafSymbol(name: string): string {
+  if (/银杏|ginkgo/i.test(name))
+    return '<path d="M10 16C8 13 3 13 2 5Q5 3 8 6L10 3L12 6Q15 3 18 5C17 13 12 13 10 16ZM10 15v4" fill="currentColor" stroke="currentColor" stroke-width="1"/>';
+  if (/枫|槭|acer/i.test(name))
+    return '<path d="M10 2l2 5 3-2-1 4 4-1-3 4 1 2-5-1-1 6-1-6-5 1 1-2-3-4 4 1-1-4 3 2z" fill="currentColor"/>';
+  return '<path d="M10 15C3 14 2 7 4 3C9 3 10 6 10 8C10 5 14 3 17 3C18 9 15 14 10 15Z" fill="currentColor"/><path d="M10 8v10" stroke="currentColor" stroke-width="1.6"/>';
 }
 
 function renderHighlights(focus = false) {
@@ -473,10 +486,12 @@ function renderHighlights(focus = false) {
   const bounds = L.latLngBounds([]);
   for (const feature of features) {
     const match = activeMatch(feature);
+    const name = selected ?? feature.properties.species[0];
+    const redLeaf = /枫|槭|黄栌|火炬树|火炬手树|acer|rhus|cotinus/i.test(name);
     const color =
       mode === "season" && match
-        ? phaseColor(category, match.phase.id)
-        : speciesColor(selected ?? feature.properties.species[0], groups);
+        ? (category === "autumn_leaf" && redLeaf ? "#b83e35" : phaseColor(category, match.phase.id))
+        : speciesColor(name, groups);
     const layer = L.geoJSON(feature, {
       pane: "species",
       style: {
@@ -491,12 +506,8 @@ function renderHighlights(focus = false) {
             : undefined,
       },
       pointToLayer: (_, latlng) =>
-        L.circleMarker(latlng, {
-          radius: 7,
-          color: "#fff",
-          weight: 2,
-          fillColor: color,
-          fillOpacity: 1,
+        L.marker(latlng, {
+          icon: L.divIcon({ className: "plant-marker", html: `<span style="--plant-color:${color}" aria-hidden="true"><svg viewBox="0 0 20 20">${leafSymbol(name)}</svg></span>`, iconSize: [26, 26], iconAnchor: [13, 13] }),
           pane: "species",
         }),
       onEachFeature: (_, child) => {
@@ -513,7 +524,7 @@ function renderHighlights(focus = false) {
         title: feature.properties.species.join(" · "),
         icon: L.divIcon({
           className: "plant-marker",
-          html: `<span style="--plant-color:${color}" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 15C3 14 2 7 4 3C9 3 10 6 10 8C10 5 14 3 17 3C18 9 15 14 10 15Z" fill="currentColor"/><path d="M10 8v10" stroke="currentColor" stroke-width="1.6"/></svg></span>`,
+          html: `<span style="--plant-color:${color}" aria-hidden="true"><svg viewBox="0 0 20 20">${leafSymbol(name)}</svg></span>`,
           iconSize: [26, 26],
           iconAnchor: [13, 13],
         }),
@@ -541,7 +552,7 @@ function renderHighlights(focus = false) {
         : "校园植物图鉴";
   $("selection-description").textContent =
     mode === "season"
-      ? `${new Set(features.flatMap((f) => f.properties.species.filter((n) => catalog && phaseFor(n, date, category, catalog, includeReferences)))).size} 个匹配物种 · ${includeReferences ? "含待校准参考" : "仅已核实资料"}`
+      ? `${new Set(features.flatMap((f) => f.properties.species.filter((n) => catalog && phaseFor(n, date, category, catalog, includeReferences, f.properties.osmId)))).size} 个匹配物种 · ${includeReferences ? "含待校准参考" : "仅已核实资料"}`
       : selected
         ? DEV_MODE
           ? "处 OSM 要素 · 点击地图标记了解详情"
@@ -606,7 +617,7 @@ function renderList() {
           .map((g) => {
             const color = speciesColor(g.name, groups);
             const match = catalog
-              ? phaseFor(g.name, date, category, catalog, includeReferences)
+              ? g.features.map((f) => phaseFor(g.name, date, category, catalog!, includeReferences, f.properties.osmId)).find(Boolean)
               : undefined;
             const detail =
               mode === "season"
@@ -621,7 +632,7 @@ function renderList() {
                 : g.features.some((f) => /Polygon/.test(f.geometry.type))
                   ? "含树林 / 植物区域"
                   : "点状 / 线状植物";
-            return `<button class="species-row ${selected === g.name ? "selected" : ""}" data-index="${groups.indexOf(g)}" aria-pressed="${selected === g.name}" style="--species-color:${mode === "season" && match ? phaseColor(category, match.phase.id) : color}"><span class="species-icon"><i data-lucide="leaf"></i></span><span class="species-name">${esc(g.name)}<small>${esc(detail)}</small></span><span class="species-count">${g.count}</span><i class="row-arrow" data-lucide="arrow-right"></i></button>`;
+            return `<button class="species-row ${selected === g.name ? "selected" : ""}" data-index="${groups.indexOf(g)}" aria-pressed="${selected === g.name}" style="--species-color:${color}"><span class="species-icon"><svg viewBox="0 0 20 20" aria-hidden="true">${leafSymbol(g.name)}</svg></span><span class="species-name">${esc(g.name)}<small>${esc(detail)}</small></span><span class="species-count">${g.count}</span><i class="row-arrow" data-lucide="arrow-right"></i></button>`;
           })
           .join("")
       : `<div class="empty-state"><i data-lucide="search"></i><b>${query ? "还没有找到这个物种" : "暂无符合条件的物候资料"}</b><p>${query ? "可清空搜索，或切换到全部物种分布。" : "可包含待校准参考，或查看全部物种分布。"}</p></div>`);

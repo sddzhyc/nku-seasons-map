@@ -228,5 +228,6 @@
       "note": "尚无本地校准日期。",
       "phases": []
     }
-  ]
+  ],
+  "poi_overrides": []
 }

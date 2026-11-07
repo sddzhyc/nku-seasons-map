@@ -175,3 +175,16 @@ species:
       note: 尚无本地校准日期。,
       phases: [],
     }
+
+# 逐位置覆盖：使用详情卡片中的完整位置编号；未配置时沿用物种默认值。
+# poi_overrides:
+#   - osm_id: way/1448582302
+#     species_id: ginkgo
+#     category: autumn_leaf
+#     verification: reference
+#     source_ids: [tianjin-autumn]
+#     note: 现场观察记录或日期依据
+#     phases:
+#       - { id: peak, category: autumn_leaf, start: "11-01", end: "11-12", label: 叶色正浓, description: 11月上中旬 }
+# 一个覆盖替换该位置、物种和类别的全部阶段；请填写完整区间。
+poi_overrides: []
