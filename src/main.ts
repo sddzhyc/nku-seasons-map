@@ -112,7 +112,7 @@ document.querySelector("#app")!.innerHTML = `
       </div>
     </section>
     <section class="data-bar" aria-label="数据更新时间"><div><span class="status-dot" ${devHidden}></span><span id="data-status" role="status" aria-live="polite" ${devHidden}>正在读取数据</span><span class="data-divider" ${devHidden}></span><span id="data-time">暂无数据同步日期</span></div><button id="refresh-data" ${devHidden}><i data-lucide="refresh-cw"></i><span>同步 OSM 数据</span></button></section>
-    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><h2 id="calendar-title">校园物候日历</h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>${DEV_MODE ? "物种 / OSM 要素" : "物种 / 分布处数"}</th><th>所选日期的参考状态</th><th>全年日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
+    <section id="phenology-calendar" class="calendar-section" aria-labelledby="calendar-title"><div class="calendar-header"><div><h2 id="calendar-title">校园物候日历</h2></div><button id="copy-link">复制当前地图链接 <i data-lucide="arrow-up-right"></i></button></div><p class="calendar-intro" id="calendar-disclaimer"></p><div class="calendar-table-wrap"><table class="calendar-table"><thead><tr><th>${DEV_MODE ? "物种 / OSM 要素" : "物种 / 分布处数"}</th><th>物种默认参考状态</th><th>物种默认日期区间（无年份）</th><th>资料依据</th></tr></thead><tbody id="calendar-body"></tbody></table></div></section>
     <footer><span>地图数据 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap 贡献者</a> <span class="footer-dot">·</span> <button id="source-button">数据说明 <i data-lucide="arrow-up-right"></i></button></span></footer>
   </main>
   <dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-top"><span class="eyebrow">ABOUT THE ATLAS</span><button id="close-dialog" aria-label="关闭说明"><i data-lucide="x"></i></button></div><h2 id="about-title">关于这张地图</h2><p>沿着真实的植物分布，读懂校园的季节。</p><div class="dialog-block"><h3>真实位置，开放数据</h3><p>点、树列及树林轮廓来自 OSM，按津南校区边界筛选。一个多多边形要素可能包含数片树林；要素数不等于树木株数。species 标签也可能标注花卉或灌木。</p></div><div class="dialog-block"><h3>日期参考与现场叶况</h3><p>分布模式按物种着色；物候模式按所选日期的阶段着色。日期由 YAML 物候库维护，历史资料和初始推定标为“待校准参考”。当前没有接入现场观测，不能把日期匹配当作实时实景。未登记区间表示资料缺失，不代表该植物没有秋叶或花期。</p></div><div class="dialog-block"><h3>每年重复的日期</h3><p>使用北京时间，日期区间包含首尾两天。开始晚于结束表示跨年。日历可查看不同年份，物候库本身不绑定年份；2月29日仅能在闰年选择。</p></div><div class="dialog-block"><h3>地图如何保持更新</h3><p>每15分钟先检查站点发布数据，再尝试 Overpass 获取最新物种。Actions 每6小时同步物种和简图并发布；失败时保留最近有效快照。OSM 编辑、Overpass 和瓦片更新各有延迟，页面始终显示数据获取时间。</p></div><a class="dialog-link" href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">参与完善 OpenStreetMap <i data-lucide="arrow-up-right"></i></a></dialog>
@@ -654,7 +654,7 @@ function renderQuickFilters() {
 
 function renderCalendar() {
   if (!catalog) return;
-  $("calendar-disclaimer").textContent = catalog.disclaimer;
+  $("calendar-disclaimer").textContent = catalog.disclaimer + " 日历显示物种默认区间；位置专属区间以地图卡片和统计为准。";
   $("calendar-body").innerHTML = eligibleGroups()
     .map((g) => {
       const index = groups.indexOf(g);
