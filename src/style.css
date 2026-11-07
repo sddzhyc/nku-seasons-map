@@ -1829,3 +1829,26 @@ footer { justify-content: flex-end; }
   .calendar-table td:nth-child(4)::before { content: "资料依据"; }
   .calendar-range { white-space: normal; }
 }
+
+/* Keep list text and map controls readable on narrow screens. */
+@media (max-width: 760px) {
+  .species-list { grid-template-columns: minmax(0, 1fr); }
+  .species-row { min-height: 56px; }
+  .species-name { overflow-wrap: anywhere; }
+  .species-count, .card-icon { flex-shrink: 0; }
+  .map-caption { left: 12px; right: 12px; bottom: 29px; flex-wrap: wrap; gap: 2px 5px; line-height: 1.45; padding: 4px 7px; border-radius: 5px; background: #fffff3ed; letter-spacing: 0; }
+  .outline-swatch { flex: 0 0 17px; }
+  .selection-card { left: 12px; right: 12px; bottom: 90px; width: auto; min-width: 0; padding: 9px 11px; gap: 8px; }
+  .selection-card > div { min-width: 0; }
+  .selection-card p { line-height: 1.45; overflow-wrap: anywhere; }
+  .selection-card > span:last-child { padding-left: 3px; }
+  .leaflet-control-scale { margin-bottom: 3px !important; margin-left: 12px !important; }
+  .quick-filters { right: 12px; overflow-x: auto; white-space: nowrap; padding-bottom: 3px; }
+  .quick-filters button { flex-shrink: 0; }
+}
+@media (max-width: 760px) {
+  .selection-card { right: 54px; }
+  .map-heading { min-width: 0; max-width: calc(100% - 95px); white-space: nowrap; overflow: hidden; }
+  .map-heading #map-selection { overflow: hidden; text-overflow: ellipsis; }
+  .map-view button { white-space: nowrap; }
+}
