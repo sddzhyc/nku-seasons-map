@@ -68,8 +68,8 @@ test("actual catalog transitions from coloring to peak to falling and works acro
     "bloom",
   );
   assert.equal(
-    phaseFor("毛白杨", "2026-11-01", "autumn_leaf", catalog)?.phase.id,
-    "peak",
+    phaseFor("毛白杨", "2026-11-09", "autumn_leaf", catalog)?.phase.id,
+    "coloring",
   );
 });
 

@@ -26,6 +26,7 @@ import {
   OVERPASS_QUERY,
   overpassUrl,
   speciesColor,
+  inRenderedBounds,
   validDataset,
 } from "./data";
 import type { Dataset, SpeciesFeature, SpeciesGroup } from "./data";
@@ -105,7 +106,7 @@ document.querySelector("#app")!.innerHTML = `
         <div class="map-topbar"><div class="map-heading"><span class="live-dot"></span><b>津南校园</b><span class="separator">/</span><span id="map-selection">全部物种</span></div><div class="map-view"><button id="base-toggle" aria-label="切换到${streetConfig.name}"><i data-lucide="layers"></i><span>校园简图</span></button></div></div>
         <div id="quick-filters" class="quick-filters" aria-label="快捷物种筛选"></div>
         <div id="map-empty" class="map-empty" hidden><i data-lucide="leaf"></i><b>暂无符合条件的物候记录</b><p id="empty-description">可以换个日期，或查看全部植物分布。</p><button id="empty-distribution">查看物种分布 <i data-lucide="arrow-right"></i></button></div>
-        <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div>
+        <div class="map-controls"><div class="north" aria-label="正北方向"><span>N</span><svg width="16" height="23" viewBox="0 0 16 23" aria-hidden="true"><path d="M8 1L15 21L8 16L1 21Z" fill="#435449"/><path d="M8 1V16L1 21Z" fill="#a0ada0"/></svg></div><button id="locate-me" aria-label="显示我的位置" title="显示我的位置"><i data-lucide="map-pin"></i></button><button id="fit-campus" aria-label="回到校园全景" title="回到校园全景"><i data-lucide="crosshair"></i></button><button id="zoom-in" aria-label="放大地图">+</button><button id="zoom-out" aria-label="缩小地图">−</button></div><div id="location-status" class="location-status" role="status" aria-live="polite" hidden></div>
         <div id="selection-card" class="selection-card"><span class="card-icon"><i data-lucide="trees"></i></span><div><b id="selection-title">校园植物图鉴</b><p id="selection-description">正在加载真实 OSM 要素</p></div><span id="selection-number">—</span></div>
         <div class="map-caption"><span class="outline-swatch"></span>校园边界 <span id="context-caption"><span class="caption-divider">·</span> 周边随距离淡化</span> <span class="caption-divider">·</span> 点击标记查看植物</div>
         <div id="tile-warning" class="tile-warning" role="status" hidden>标准底图暂未加载，可切回校园简图。</div>
@@ -205,6 +206,34 @@ function fitCampus() {
     });
 }
 $("fit-campus").onclick = fitCampus;
+let userLocation: L.LayerGroup | undefined;
+$("locate-me").onclick = () => {
+  const status = $("location-status");
+  status.hidden = false;
+  if (!navigator.geolocation || !window.isSecureContext) {
+    status.textContent = "当前浏览器或页面不支持定位，请使用 HTTPS 并允许位置权限。";
+    return;
+  }
+  status.textContent = "正在获取位置…";
+  navigator.geolocation.getCurrentPosition((position) => {
+    if (userLocation) map.removeLayer(userLocation);
+    const { latitude, longitude, accuracy } = position.coords;
+    if (!inRenderedBounds(latitude, longitude)) {
+      status.textContent = "当前位置在校园简图范围之外。";
+      return;
+    }
+    const point = L.latLng(latitude, longitude);
+    userLocation = L.layerGroup([
+      L.circle(point, { radius: accuracy, color: "#236dc0", fillColor: "#5b9be5", fillOpacity: 0.12, weight: 1, interactive: false }),
+      L.circleMarker(point, { radius: 8, color: "white", weight: 3, fillColor: "#1768c0", fillOpacity: 1 }).bindTooltip("当前位置", { permanent: true, direction: "top" }),
+    ]).addTo(map);
+    map.setView(point, Math.max(map.getZoom(), 16));
+    status.textContent = `当前位置已显示，定位精度约 ${Math.round(accuracy)} 米。`;
+  }, (error) => {
+    if (userLocation) map.removeLayer(userLocation);
+    status.textContent = error.code === 1 ? "位置权限未开启，请在浏览器设置中允许定位。" : error.code === 3 ? "定位超时，请重试。" : "暂时无法获取位置，请检查设备定位设置。";
+  }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+};
 $("zoom-in").onclick = () => map.zoomIn();
 $("zoom-out").onclick = () => map.zoomOut();
 $("base-toggle").onclick = () => {

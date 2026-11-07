@@ -3,12 +3,20 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import {
   CAMPUS_WAY,
+  inRenderedBounds,
   convertOsm,
   filterSpecies,
   groupSpecies,
   splitSpecies,
   validDataset,
 } from "../src/data.js";
+test("location bounds include the rendered campus and reject outside or invalid coordinates", () => {
+  assert.equal(inRenderedBounds(38.988622, 117.333825), true);
+  assert.equal(inRenderedBounds(38.971, 117.314), true);
+  assert.equal(inRenderedBounds(38.9709, 117.333825), false);
+  assert.equal(inRenderedBounds(38.988622, 117.3661), false);
+  assert.equal(inRenderedBounds(NaN, 117.33), false);
+});
 import type { Dataset } from "../src/data.js";
 
 function fixture() {

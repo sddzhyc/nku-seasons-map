@@ -1808,3 +1808,24 @@ footer { justify-content: flex-end; }
   .season-note > span { flex: 1; min-width: 180px; }
   .season-note button { margin-left: 22px; }
 }
+
+.location-status { position: absolute; z-index: 700; top: 92px; right: 55px; max-width: min(280px, 70%); padding: 9px 12px; border-radius: 7px; background: #fff; color: #243e35; box-shadow: 0 2px 8px #253e3033; font-size: 13px; }
+@media (max-width: 760px) {
+  main { display: flex; flex-direction: column; }
+  .season-panel { order: 0; }
+  .explorer { order: 1; }
+  .data-bar { order: 2; }
+  .calendar-section { order: 3; }
+  footer { order: 4; }
+  .calendar-table-wrap { overflow: visible; border: 0; background: transparent; }
+  .calendar-table, .calendar-table tbody, .calendar-table tr, .calendar-table td { display: block; width: 100%; }
+  .calendar-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .calendar-table tr { border: 1px solid #dce3d4; border-radius: 9px; margin-bottom: 12px; background: #fcfcf5; overflow: hidden; }
+  .calendar-table td, .calendar-table td:first-child, .calendar-table td:nth-child(2), .calendar-table td:nth-child(3), .calendar-table td:nth-child(4) { width: 100%; min-width: 0; max-width: none; padding: 10px 14px; }
+  .calendar-table td:first-child { border-top: 0; background: #eff3e7; }
+  .calendar-table td:nth-child(n+2)::before { display: block; color: #52634c; font-weight: 700; font-size: 12px; margin-bottom: 7px; }
+  .calendar-table td:nth-child(2)::before { content: "物种默认参考状态"; }
+  .calendar-table td:nth-child(3)::before { content: "物种默认日期区间"; }
+  .calendar-table td:nth-child(4)::before { content: "资料依据"; }
+  .calendar-range { white-space: normal; }
+}

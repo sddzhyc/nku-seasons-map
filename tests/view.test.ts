@@ -20,13 +20,13 @@ test("stage statistics distinguish active, out-of-season, missing, and excluded 
   const ginkgo = groups.find((g) => g.name === "银杏")!.count;
   assert.ok(autumn.matched > ginkgo);
   assert.equal(autumn.phases.coloring, autumn.matched);
-  assert.equal(autumn.unknown, autumn.total - autumn.matched);
-  const winter = phenologyStats(dataset.features, catalog, "2026-12-20", "autumn_leaf");
+  assert.equal(autumn.unknown, autumn.total - autumn.matched - autumn.outside);
+  const winter = phenologyStats(dataset.features, catalog, "2026-12-25", "autumn_leaf");
   assert.equal(winter.matched, 0);
-  assert.equal(winter.outside, autumn.matched);
+  assert.equal(winter.outside, autumn.matched + autumn.outside);
   assert.equal(winter.unknown, autumn.unknown);
   const filtered = phenologyStats(dataset.features, catalog, "2026-10-26", "autumn_leaf", null, false);
-  assert.equal(filtered.excluded, autumn.matched);
+  assert.equal(filtered.excluded, autumn.matched + autumn.outside);
   assert.equal(filtered.unknown, autumn.unknown);
   const selected = phenologyStats(dataset.features, catalog, "2026-11-05", "autumn_leaf", "银杏");
   assert.equal(selected.total, ginkgo);
@@ -73,7 +73,7 @@ test("POI dates override the species schedule only for the specified location", 
 test("season lists require intervals for the chosen category; distribution retains unknown dates", () => {
   assert.deepEqual(
     groupsForView(groups, catalog, "season", "autumn_leaf").map((g) => g.name),
-    groups.filter((g) => !["月季", "芍药"].includes(g.name)).map((g) => g.name),
+    groups.filter((g) => ["银杏", "毛白杨", "法桐", "柳树"].includes(g.name)).map((g) => g.name),
   );
   assert.deepEqual(
     groupsForView(groups, catalog, "season", "flowering").map((g) => g.name),

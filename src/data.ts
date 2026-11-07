@@ -7,6 +7,9 @@ export const CENTER: [number, number] = [38.988622, 117.333825];
 // Basemap context extends roughly one kilometre beyond each side of campus.
 // Plant selection is still constrained by the actual OSM campus polygon.
 export const BBOX = [117.314, 38.971, 117.366, 39.006] as const;
+export function inRenderedBounds(lat: number, lng: number): boolean {
+  return Number.isFinite(lat) && Number.isFinite(lng) && lng >= BBOX[0] && lng <= BBOX[2] && lat >= BBOX[1] && lat <= BBOX[3];
+}
 export const OVERPASS_QUERY = `[out:json][timeout:25];way(${CAMPUS_WAY});map_to_area->.campus;(nwr["species"](area.campus);way(${CAMPUS_WAY}););out body;>;out skel qt;`;
 export const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
