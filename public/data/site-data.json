@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "revision": "e31ce38b7a192fd6",
+  "revision": "06ce112741160468",
   "dataset": {
     "schemaVersion": 1,
-    "fetchedAt": "2026-11-10T19:51:52.132Z",
+    "fetchedAt": "2026-11-11T06:44:10.441Z",
     "source": "https://overpass-api.de/api/interpreter",
-    "osmTimestamp": "2026-11-10T19:50:34Z",
+    "osmTimestamp": "2026-11-11T06:43:01Z",
     "campus": {
       "type": "Feature",
       "id": "way/476603067",
